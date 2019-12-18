@@ -21,7 +21,7 @@ public class CHEditorRest {
 	
 	@GetMapping("addclass")
 	public Response createClass(@RequestParam(required = true) Integer pid, @RequestParam Integer cid,
-		@RequestParam String name, @RequestParam boolean _abstract) {
+		@RequestParam String name, @RequestParam(name = "abstract") boolean _abstract) {
 		Clazz c = new Clazz();
 		
 		c.setPid(pid);
@@ -29,6 +29,7 @@ public class CHEditorRest {
 		c.setName(name);
 		c.setAbstract_(_abstract);
 		
+		//TODO - EXCEPTION HANDLNIG FOR THIS METHOD
 		cRepo.save(c);
 		
 		Response res = new Response();
