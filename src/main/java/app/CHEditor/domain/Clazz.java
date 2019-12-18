@@ -8,19 +8,26 @@ import javax.persistence.Id;
 
 @Entity
 public class Clazz {
-	@Column
-	int pid;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int id;
+	
+	@Column(nullable = true)
+	Integer pid;
+	
+	@Column(unique = true)
 	int cid;
+	
 	@Column
 	String name;
+	
 	@Column
 	boolean _abstract;
 	
 	/*Required by 	Spring entity management*/
 	public Clazz () {
-		
+		this._abstract = false;
 	}
 	
 	public Clazz (int pid, int cid, String name, boolean _abstract) {
@@ -67,15 +74,15 @@ public class Clazz {
 		this.name = name;
 	}
 	/**
-	 * @return the abstract_
+	 * @return the _abstract
 	 */
 	public boolean isAbstract_() {
 		return _abstract;
 	}
 	/**
-	 * @param abstract_ the abstract_ to set
+	 * @param _abstract the abstract_ to set
 	 */
-	public void setAbstract_(boolean abstract_) {
-		this._abstract = abstract_;
+	public void setAbstract_(boolean _abstract) {
+		this._abstract = _abstract;
 	}
 }
