@@ -14,7 +14,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.anyRequest()
 			.requiresSecure()
 		.and()
-			.authorizeRequests().antMatchers("/","/cheditor/**")
+			.authorizeRequests().antMatchers("/","/cheditor/**").permitAll()
 			;
 	}
 	
