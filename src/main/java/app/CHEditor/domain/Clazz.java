@@ -16,7 +16,7 @@ public class Clazz {
 	@Column
 	String name;
 	@Column
-	boolean abstract_;
+	boolean _abstract;
 	
 	public Clazz () {
 		
@@ -62,12 +62,12 @@ public class Clazz {
 	 * @return the abstract_
 	 */
 	public boolean isAbstract_() {
-		return abstract_;
+		return _abstract;
 	}
 	/**
 	 * @param abstract_ the abstract_ to set
 	 */
 	public void setAbstract_(boolean abstract_) {
-		this.abstract_ = abstract_;
+		this._abstract = abstract_;
 	}
 }
