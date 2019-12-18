@@ -18,8 +18,16 @@ public class Clazz {
 	@Column
 	boolean _abstract;
 	
+	/*Required by 	Spring entity management*/
 	public Clazz () {
 		
+	}
+	
+	public Clazz (int pid, int cid, String name, boolean _abstract) {
+		this.pid = pid;
+		this.cid = cid;
+		this.name = name;
+		this._abstract = _abstract;
 	}
 	
 	/**
