@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ChEditorApplication {
+public class CHEditorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ChEditorApplication.class, args);
+		SpringApplication.run(CHEditorApplication.class, args);
 	}
 
 }

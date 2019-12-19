@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 @Entity
 public class Clazz {
@@ -25,9 +28,13 @@ public class Clazz {
 	@Column
 	boolean _abstract;
 	
+	@Transient
+	boolean isNull = true;
+	
 	/*Required by 	Spring entity management*/
 	public Clazz () {
 		this._abstract = false;
+		this.isNull = false;
 	}
 	
 	public Clazz (int pid, int cid, String name, boolean _abstract) {
@@ -35,6 +42,7 @@ public class Clazz {
 		this.cid = cid;
 		this.name = name;
 		this._abstract = _abstract;
+		this.isNull = false;
 	}
 	
 	/**
@@ -84,5 +92,19 @@ public class Clazz {
 	 */
 	public void setAbstract_(boolean _abstract) {
 		this._abstract = _abstract;
+	}
+
+	/**
+	 * @return the isNull
+	 */
+	public boolean isNull() {
+		return isNull;
+	}
+
+	/**
+	 * @param isNull the isNull to set
+	 */
+	public void setNull(boolean isNull) {
+		this.isNull = isNull;
 	}
 }
