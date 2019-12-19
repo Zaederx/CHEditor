@@ -46,7 +46,7 @@ public class CHEditorRest {
 	}
 	
 //	@PostMapping(value = "addclassJSON", consumes = "application/json", produces = "application/json")
-	@Transactional
+//	@Transactional
 	public Response createClass(@RequestBody Clazz c) {
 		Response res = new Response();
 		try {
@@ -75,34 +75,36 @@ public class CHEditorRest {
 		return res;
 	}
 
-//	@Transactional
+
 	@PostMapping(value = "addclassJSON", consumes = "application/json", produces = "application/json")
-	public List<Response> createClass( @RequestBody(required = false) Clazzes clazzes) {
-		List<Response> res = new ArrayList<Response>();
+	public Response createClass( @RequestBody Clazzes clazzes) {
+		Response res = new Response();
 	
-		if (!clazzes.isClazzesIsNull()) {
+		
 			try {
-				for (Clazz c : clazzes.getClazzes()) {
-					res.add(create(c));
+				for (Clazz c : clazzes.getClasses()) {
+					createClass(c);
 				}
+				res.setRet(true);
 			} catch (Exception e) {
 				e.printStackTrace();
 				Response r = new Response();
-				r.setRet(false);
-				r.setMessage("Error 1 adding classes to hierarchy.");
-				res.add(r);
+				res.setRet(false);
+				res.setMessage("Error 1 adding classes to hierarchy.");
+//				res.add(r);
 			}
-		} else if (!clazzes.isClazzIsNull()) {
-			try {
-				res.add(create(clazzes.getClazz()));
-			} catch (Exception e) {
-				e.printStackTrace();
-				Response r = new Response();
-				r.setRet(false);
-				r.setMessage("Error 2 adding class to hierachy.");
-				res.add(r);
-			}
-		}
+
+//		} else if (!clazzes.isClazzIsNull()) {
+//			try {
+//				create(clazzes.getClazz());
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//				Response r = new Response();
+//				res.setRet(false);
+//				res.setMessage("Error 2 adding class to hierachy.");
+////				res.add(r);
+//			}
+//		}
 		
 		return res;
 	}

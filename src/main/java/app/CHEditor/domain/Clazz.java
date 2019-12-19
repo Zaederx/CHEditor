@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-
+@JsonRootName("class")
 @Entity
 public class Clazz {
 	
