@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,12 +34,20 @@ public class CHEditorRest {
 		cRepo.save(c);
 		
 		Response res = new Response();
-		res.setResponse(true);
+		res.setRet(true);
 		res.setMessage("Class "+c.getName()+" added.");
 		return res;
 	}
 	
-//	@PostMapping()
+	@PostMapping(value = "addclassJSON", consumes = "application/json", produces = "application/json")
+	public Response createClass(@RequestBody Clazz c) {
+//		Clazz c = new Clazz();
+		Response res = new Response();
+		cRepo.save(c);
+		res.setRet(true);
+		res.setMessage("Class "+c.getName()+" added.");
+		return res;
+	}
 	
 	/*TODO ADD REQUEST MAPPING*/
 	public Response readClass() {

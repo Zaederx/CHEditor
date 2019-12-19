@@ -2,19 +2,19 @@ package app.CHEditor.formObjects;
 
 public class Response {
 
-	boolean response;
+	boolean ret;
 	String message;
 	/**
 	 * @return the response
 	 */
-	public boolean isResponse() {
-		return response;
+	public boolean isRet() {
+		return ret;
 	}
 	/**
-	 * @param response the response to set
+	 * @param ret the response to set
 	 */
-	public void setResponse(boolean response) {
-		this.response = response;
+	public void setRet(boolean ret) {
+		this.ret = ret;
 	}
 	/**
 	 * @return the message

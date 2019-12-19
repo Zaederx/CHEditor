@@ -15,6 +15,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.requiresSecure()
 		.and()
 			.authorizeRequests().antMatchers("/","/cheditor/**").permitAll()
+		.and().csrf().disable()// allows that posts without csrf tokens - not easily done via regular JSON post.
 			;
 	}
 	
