@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonRootName("class")
 @Entity
@@ -14,25 +18,32 @@ public class Clazz {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	int id;
 	
 	@Column(nullable = true)
+	@JsonProperty("pid")
 	Integer pid;
 	
 	@Column(unique = true)
+	@JsonProperty("cid")
 	int cid;
 	
 	@Column
+	@JsonProperty("name")
 	String name;
 	
 	@Column
+	@JsonProperty("abstract")
 	boolean _abstract;
 	
 	@Transient
+	@JsonIgnore
 	boolean isNull = true;
 	
 	/*Required by 	Spring entity management*/
 	public Clazz () {
+		this.pid = 0;
 		this._abstract = false;
 		this.isNull = false;
 	}

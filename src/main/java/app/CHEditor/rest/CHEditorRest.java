@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.CHEditor.domain.Clazz;
 import app.CHEditor.domain.Clazzes;
+import app.CHEditor.domain.Container;
 import app.CHEditor.formObjects.Response;
 import app.CHEditor.repositories.ClazzRepository;
 
@@ -80,7 +81,7 @@ public class CHEditorRest {
 	public Response createClass( @RequestBody Clazzes clazzes) {
 		Response res = new Response();
 	
-		
+		if (!clazzes.isNull()) {
 			try {
 				for (Clazz c : clazzes.getClasses()) {
 					createClass(c);
@@ -93,18 +94,19 @@ public class CHEditorRest {
 				res.setMessage("Error 1 adding classes to hierarchy.");
 //				res.add(r);
 			}
+		}
 
-//		} else if (!clazzes.isClazzIsNull()) {
-//			try {
-//				create(clazzes.getClazz());
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				Response r = new Response();
-//				res.setRet(false);
-//				res.setMessage("Error 2 adding class to hierachy.");
-////				res.add(r);
-//			}
-//		}
+		if (!clazzes.getClazz().isNull()) {
+			try {
+				create(clazzes.getClazz());
+			} catch (Exception e) {
+				e.printStackTrace();
+				Response r = new Response();
+				res.setRet(false);
+				res.setMessage("Error 2 adding class to hierachy.");
+//				res.add(r);
+			}
+		}
 		
 		return res;
 	}
