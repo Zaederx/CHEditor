@@ -1,7 +1,6 @@
 package app.CHEditor.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Feature;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 /**
@@ -15,7 +14,13 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 public class Clazzes extends Clazz {
 	
 	private Clazz[] classes;
-
+	private boolean isNull;
+	
+	
+	public Clazzes () {
+		super();
+		this.isNull = true;
+	}
 	/**
 	 * @return the clazzes
 	 */
@@ -28,9 +33,27 @@ public class Clazzes extends Clazz {
 	 */
 	public void setClasses(Clazz[] clazzes) {
 		this.classes = clazzes;
+		this.isNull = false;
 	}
 	
-
+	/**
+	 * @return the isNull
+	 */
+	public boolean isNull() {
+		return this.isNull;
+	}
+	/**
+	 * @param isNull the isNull to set
+	 */
+	public void setNull(boolean isNull) {
+		this.isNull = isNull;
+	}
+	
+	/**
+	 * For handling single clazz objects.
+	 * @return
+	 */
+	@JsonIgnore
 	public Clazz getClazz() {
 		Clazz clazz = new Clazz();
 		clazz.setName(name);
@@ -39,7 +62,6 @@ public class Clazzes extends Clazz {
 		clazz.setPid(pid);
 		}
 		clazz.setAbstract_(_abstract);
-		clazz.setNull(false);
 		return clazz;
 	}
 }

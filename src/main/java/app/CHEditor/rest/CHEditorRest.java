@@ -46,30 +46,16 @@ public class CHEditorRest {
 		return res;
 	}
 	
-//	@PostMapping(value = "addclassJSON", consumes = "application/json", produces = "application/json")
-//	@Transactional
-	public Response createClass(@RequestBody Clazz c) {
-		Response res = new Response();
-		try {
-		cRepo.save(c);
-		res.setRet(true);
-		} catch (Exception e) {
-			Clazz existingClass = cRepo.findByCid(c.getCid());
-			e.getMessage();
-			res.setRet(false);
-			res.setMessage("A class named \""+ existingClass.getName()+"\" with cid \"" + c.getCid() + "\" already exists.");
-		}
-		return res;
-	}
 	
 	public Response create(Clazz c) {
 		Response res = new Response();
 		try {
 		cRepo.save(c);
 		res.setRet(true);
+		res.setMessage(null);
 		} catch (Exception e) {
 			Clazz existingClass = cRepo.findByCid(c.getCid());
-			e.getMessage();
+			e.printStackTrace();
 			res.setRet(false);
 			res.setMessage("A class named \""+ existingClass.getName()+"\" with cid \"" + c.getCid() + "\" already exists.");
 		}
@@ -82,30 +68,12 @@ public class CHEditorRest {
 		Response res = new Response();
 	
 		if (!clazzes.isNull()) {
-			try {
-				for (Clazz c : clazzes.getClasses()) {
-					createClass(c);
-				}
-				res.setRet(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-				Response r = new Response();
-				res.setRet(false);
-				res.setMessage("Error 1 adding classes to hierarchy.");
-//				res.add(r);
+			for (Clazz c : clazzes.getClasses()) {
+					res = create(c);
 			}
 		}
-
-		if (!clazzes.getClazz().isNull()) {
-			try {
-				create(clazzes.getClazz());
-			} catch (Exception e) {
-				e.printStackTrace();
-				Response r = new Response();
-				res.setRet(false);
-				res.setMessage("Error 2 adding class to hierachy.");
-//				res.add(r);
-			}
+		else {
+				res = create(clazzes.getClazz());
 		}
 		
 		return res;

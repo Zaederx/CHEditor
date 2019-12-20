@@ -8,6 +8,11 @@ public class Response {
 
 	boolean ret;
 	String message;
+	
+	public Response () {
+		this.ret = false;
+		this.message = "Default Error message";
+	}
 	/**
 	 * @return the response
 	 */
