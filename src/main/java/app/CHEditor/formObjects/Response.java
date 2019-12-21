@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class Response {
 
-	boolean ret;
+	boolean ret; // FIXME - CHECK WHETHER ret must be string or boolean to meet criteria?? ask professor
 	String message;
 	
 	public Response () {

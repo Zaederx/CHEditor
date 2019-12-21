@@ -14,13 +14,17 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 public class Clazzes extends Clazz {
 	
 	private Clazz[] classes;
+	@JsonIgnore
 	private boolean isNull;
 	
 	
 	public Clazzes () {
-		super();
+//		super();//TODO - REMOVEI FOUND UNECESSAYR IN REFACTROING
 		this.isNull = true;
 	}
+	/*Note: getters MUST match JsonRootName to function correctly
+	 * with Jackson parsing.
+	 * i.e. class - getClasses - not getClazzes*/
 	/**
 	 * @return the clazzes
 	 */
@@ -39,12 +43,14 @@ public class Clazzes extends Clazz {
 	/**
 	 * @return the isNull
 	 */
+	@JsonIgnore
 	public boolean isNull() {
 		return this.isNull;
 	}
 	/**
 	 * @param isNull the isNull to set
 	 */
+	@JsonIgnore
 	public void setNull(boolean isNull) {
 		this.isNull = isNull;
 	}
@@ -58,7 +64,7 @@ public class Clazzes extends Clazz {
 		Clazz clazz = new Clazz();
 		clazz.setName(name);
 		clazz.setCid(cid);
-		if (pid != 0) {
+		if (pid != null) {
 		clazz.setPid(pid);
 		}
 		clazz.setAbstract_(_abstract);

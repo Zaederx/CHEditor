@@ -1,7 +1,5 @@
 package app.CHEditor.rest;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import app.CHEditor.domain.Clazz;
 import app.CHEditor.domain.Clazzes;
-import app.CHEditor.domain.Container;
 import app.CHEditor.formObjects.Response;
 import app.CHEditor.repositories.ClazzRepository;
 
@@ -63,6 +60,7 @@ public class CHEditorRest {
 	}
 
 
+	@Transactional
 	@PostMapping(value = "addclassJSON", consumes = "application/json", produces = "application/json")
 	public Response createClass( @RequestBody Clazzes clazzes) {
 		Response res = new Response();
@@ -80,10 +78,18 @@ public class CHEditorRest {
 	}
 	
 	/*TODO ADD REQUEST MAPPING*/
-	public Response readClass() {
+	@GetMapping("getclass/{cid}")
+	public Object readClass(@PathVariable int cid) {
 		Response res = new Response();
+		Clazz c = cRepo.findByCid(cid);
 		
-		return res;
+		if (c == null) {
+			res.setRet(false);
+			res.setMessage("cid "+cid+" not exist.");
+			return res;
+		} else {
+			return c;
+		}
 	}
 	
 	/*TODO ADD REQUEST MAPPING - POST MAPPING*/
