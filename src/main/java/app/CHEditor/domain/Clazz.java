@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,11 +12,13 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
+import app.CHEditor.formObjects.ClazzForm;
+
 
 @Entity
 @JsonRootName("class")
 @JsonInclude(Include.NON_NULL)
-public class Clazz {
+public class Clazz extends AbstractClazz {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,10 +38,6 @@ public class Clazz {
 	@JsonProperty("abstract")
 	boolean _abstract;
 	
-//	@Transient
-//	@JsonIgnore
-//	boolean isNull = true;
-	
 	/*Required by 	Spring entity management*/
 	public Clazz () {
 		this._abstract = false;
@@ -51,7 +48,22 @@ public class Clazz {
 		this.cid = cid;
 		this.name = name;
 		this._abstract = _abstract;
-//		this.isNull = false;
+
+	}
+	
+	public Clazz (ClazzForm form) {
+		this.pid = form.getPid();
+		this.cid = form.getCid();
+		this.name = form.getName();
+		this._abstract = form.isAbstract_();
+
+	}
+	
+	public Clazz (Clazzes c) {
+		this.pid = c.getPid();
+		this.cid = c.getCid();
+		this.name = c.getName();
+		this._abstract = c.isAbstract_();
 	}
 	
 	/**
@@ -106,19 +118,35 @@ public class Clazz {
 		this._abstract = _abstract;
 	}
 
-//	/**
-//	 * @return the isNull
-//	 */
-//	@JsonIgnore
-//	public boolean isNull() {
-//		return isNull;
-//	}
 
-//	/**
-//	 * @param isNull the isNull to set
-//	 */
-//	@JsonIgnore
-//	public void setNull(boolean isNull) {
-//		this.isNull = isNull;
-//	}
+	@Override
+	public int getId() {
+		return this.id;
+	}
+
+	@Override
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	/*Reqiured to satisfy Abstract ClazzDefintion*/
+	@Override
+	public boolean isSingleClazz() {
+		return true;
+	}
+
+	@Override
+	public void setSingleClazz(boolean singleClazz) {}
+
+	@Override
+	public Clazz[] getClasses() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setClasses() {
+		// TODO Auto-generated method stub
+		
+	}
 }
