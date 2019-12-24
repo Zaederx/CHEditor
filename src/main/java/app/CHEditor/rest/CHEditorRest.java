@@ -174,6 +174,7 @@ public class CHEditorRest {
 		try {
 		cRepo.delete(c);
 		res.setRet(true);
+		res.setMessage(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 			res.setRet(false);
