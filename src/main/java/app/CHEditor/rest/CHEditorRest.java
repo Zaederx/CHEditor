@@ -3,6 +3,9 @@ package app.CHEditor.rest;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import app.CHEditor.domain.AbstractClazz;
 import app.CHEditor.domain.Clazz;
 import app.CHEditor.domain.Clazzes;
+import app.CHEditor.domain.SuperClazzes;
 import app.CHEditor.formObjects.ClazzForm;
 import app.CHEditor.formObjects.Response;
 import app.CHEditor.repositories.ClazzRepository;
@@ -39,6 +46,7 @@ public class CHEditorRest {
 		binder.addValidators(new CreateClazzValidator(cRepo));
 	}
 	
+	List<Clazz> parents = new ArrayList<Clazz>();
 	String message = "";
 	
 	@Transactional
@@ -134,12 +142,12 @@ public class CHEditorRest {
 		Response res = new Response();
 		message = "";
 		if (!clazzes.isNull()) {
-			for (Clazz c : clazzes.getClasses()) {
+			for (Clazz c : clazzes.getClasses()) {//Clazzes
 				res.setMessage(create(c,result));
 			}
 		}
 		else {
-				Clazz c2 = new Clazz(clazzes.getClazzForm());
+				Clazz c2 = new Clazz(clazzes.getClazzForm());//ClazzForm
 				res.setMessage(create(c2, result));
 		}
 		return res;
@@ -184,4 +192,33 @@ public class CHEditorRest {
 		
 		return res;
 	}
+	
+	@GetMapping("superclasses/{pid}")
+	public Object getSuperclasses(@PathVariable Integer pid) {
+		Response res = new Response();
+		res.setRet(false);
+		res.setMessage(null);
+		List<Clazz> parents = new ArrayList<Clazz>();
+		SuperClazzes clazzes = new SuperClazzes();
+		boolean search = true;
+		while (search) {
+			Clazz c = null;
+			if (pid != null) {
+				c = cRepo.findByCid(pid);
+			}
+			if (c == null) { search = false; System.out.println(search);}
+			else {
+				parents.add(c);
+				if (pid != null) {
+				pid = c.getPid();
+				}
+			}
+		}
+		if (!parents.isEmpty()) {
+			clazzes.setParents(parents);
+			return clazzes;
+		}
+		return res;
+	}
+	
 }

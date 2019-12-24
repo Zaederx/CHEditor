@@ -25,6 +25,14 @@ public class CreateClazzValidator implements Validator{
 		this.cRepo = cRepo;
 	}
 	
+	/**
+	 * A method to allow validation of Clazz forms.
+	 * Uses java generics in order to work with any 
+	 * class that extends and implments the {@link AbstractClazz}.
+	 * @param <C> - any class that extends from AbstractClazz
+	 * @param clazzes
+	 * @param errors
+	 */
 	public <C extends AbstractClazz>void validateClazz (C clazzes, Errors errors) {
 	//Required Fields - to be used for second part
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cid", "","cid is empty.");

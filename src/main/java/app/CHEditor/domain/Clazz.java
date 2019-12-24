@@ -130,11 +130,13 @@ public class Clazz extends AbstractClazz {
 	}
 	
 	/*Reqiured to satisfy Abstract ClazzDefintion*/
+	@JsonIgnore
 	@Override
 	public boolean isSingleClazz() {
 		return true;
 	}
 
+	@JsonIgnore
 	@Override
 	public void setSingleClazz(boolean singleClazz) {}
 

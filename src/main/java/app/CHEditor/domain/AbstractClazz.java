@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public abstract class AbstractClazz {
 	
 	//For part 2 validation by default - must be false for correct validation
+	@JsonIgnore
 	public boolean singleClazz = false;
 	
 	@JsonIgnore
