@@ -18,12 +18,7 @@ public class CreateClazzValidator implements Validator{
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
-//		boolean supports = false;
-//		if (Clazzes.class.equals(clazz) || ClazzForm.class.equals(clazz)) {
-//			supports = true;
-//		}
-		
-		 return clazz.isAssignableFrom(clazz);
+		 return AbstractClazz.class.isAssignableFrom(clazz);
 	}
 
 	public CreateClazzValidator(ClazzRepository cRepo) {
