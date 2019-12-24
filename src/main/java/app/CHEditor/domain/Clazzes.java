@@ -16,6 +16,8 @@ import app.CHEditor.formObjects.ClazzForm;
 public class Clazzes extends AbstractClazz {
 	
 	private Clazz[] classes;
+	/*Whether this object contains
+	 * Clazz[]*/
 	@JsonIgnore
 	private boolean isNull;
 	
@@ -41,6 +43,7 @@ public class Clazzes extends AbstractClazz {
 	public void setClasses(Clazz[] clazzes) {
 		this.classes = clazzes;
 		this.isNull = false;
+		this.singleClass = false;
 	}
 	
 	/**
@@ -75,17 +78,19 @@ public class Clazzes extends AbstractClazz {
 	}
 	
 	/*Explicitly Overriden to Allow better use with generics */
+	@JsonIgnore
 	@Override
 	public boolean isSingleClazz() {
 		return this.singleClass;
 	}
+	@JsonIgnore
 	@Override
 	public void setSingleClazz(boolean singleClazz) {
 		this.singleClass = singleClazz;
 	}
 	@Override
 	public int getId() {
-		return this.id = id;
+		return this.id;
 	}
 	@Override
 	public void setId(int id) {
@@ -100,11 +105,12 @@ public class Clazzes extends AbstractClazz {
 		this.pid = pid;
 	}
 	@Override
-	public int getCid() {
+	public Integer getCid() {
+		this.singleClass = true;
 		return this.cid;
 	}
 	@Override
-	public void setCid(int cid) {
+	public void setCid(Integer cid) {
 		this.cid = cid;
 	}
 	@Override
@@ -127,4 +133,5 @@ public class Clazzes extends AbstractClazz {
 	public void setClasses() {
 	
 	}
+
 }

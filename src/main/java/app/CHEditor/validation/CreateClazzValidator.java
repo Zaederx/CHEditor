@@ -33,44 +33,50 @@ public class CreateClazzValidator implements Validator{
 	 * @param clazzes
 	 * @param errors
 	 */
-	public <C extends AbstractClazz>void validateClazz (C clazzes, Errors errors) {
+	public <C extends AbstractClazz>void validateClazz (C c, Errors errors) {
 	//Required Fields - to be used for second part
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "cid", "","cid is empty.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "", "name is empty.");
+//		System.out.println("c.getName():"+c.getName());
 		
-		
-		Clazz c = cRepo.findByCid(clazzes.getCid());
+		Clazz cTest = null;
+		cTest = cRepo.findByCid(c.getCid());
 		
 		if (c != null) {
-			errors.rejectValue("cid", "", "cid '"+clazzes.getCid()+"' is already assigned");
+			errors.rejectValue("cid", "", "cid '"+c.getCid()+"' is already assigned");
 		}
 		
-		Clazz c2 = cRepo.findByName(clazzes.getName());
+		Clazz c2 = cRepo.findByName(c.getName());
 		
 		if (c2 != null) {
-			errors.rejectValue("name", "", "Clazz '" +clazzes.getName() + "' name is already in use");
+			errors.rejectValue("name", "", "Clazz '" +c.getName() + "' name is already in use");
 		}
 		
-		if (clazzes.getPid() != null) {
-			Clazz c3 = cRepo.findByPid(clazzes.getPid());
-	
+		if (c.getPid() != null) {
+			Clazz c3 = cRepo.findByPid(c.getPid());
 			if (c3 == null) {
-				errors.rejectValue("pid", "", "pid '"+clazzes.getPid()+"' already does not exist");
+				errors.rejectValue("pid", "", "pid '"+c.getPid()+"' already does not exist");
 			}
 		}
 	}
 	
+	public void validateClazzes(Clazz c, Errors errors) {
+		if (c.getName() == null) {
+			errors.rejectValue("name", "", "name is empty.");
+		}
+	}
 	@Override
 	public void validate(Object target, Errors errors) {
 		AbstractClazz clazzes = (AbstractClazz) target;
 		
+		//works for single clazz
 		if (clazzes.isSingleClazz()) {
+			System.out.println("\n *******Class is single class******\n");
 			validateClazz(clazzes, errors);
-		}
-		 else {	
+		} else {
+			//name validation does not work for clazzes
+			System.out.println("\n ******class is not single class*****\n");
 			for (Clazz c : clazzes.getClasses()) {
-				validateClazz(c,errors);
+				validateClazzes(c,errors);
 			}
-		}	
+		}
 	}
 }

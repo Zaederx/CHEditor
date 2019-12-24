@@ -27,7 +27,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import app.CHEditor.domain.AbstractClazz;
 import app.CHEditor.domain.Clazz;
 import app.CHEditor.domain.Clazzes;
-import app.CHEditor.domain.SuperClazzes;
+import app.CHEditor.domain.SubClazzContainer;
+import app.CHEditor.domain.SuperClazzContainer;
 import app.CHEditor.formObjects.ClazzForm;
 import app.CHEditor.formObjects.Response;
 import app.CHEditor.repositories.ClazzRepository;
@@ -81,24 +82,36 @@ public class CHEditorRest {
 	
 //	<C extends AbstractClazz>
 
-	public String create(Clazz c, BindingResult result) {
+	public Response create(Clazz c, BindingResult result) {
 		Response res = new Response();
 //		res.setMessage("Testing 123");
 		/*Using DTO to allow even invalid fields to be stored
 		 * Otherwise number info is lost / not stored not complianted to entity annotation constraints.
 		 * */
-		
+		System.out.println("create c getName:"+c.getName());
 		/*Validate ClazzForm*/
 	
 		String messagePid = "pid '"+ c.getPid()+ "' not found. ";
 		String messageCid = "cid '"+c.getCid()+"' already exists. ";
 		String messageName = "name '"+c.getName()+"' already exists. ";
 		
+		if (c.getName() == null) {
+			message += "name is empty.";
+		}
+		
+		if (c.getCid() == null) {
+			message += "cid is empty.";
+		}
+		
+		if (c.getPid () == null) {
+			message += "pid is empty";
+		}
 		
 		
 		if (result.hasFieldErrors("pid")) {
 			res.setRet(false);
 			message += messagePid;
+			
 	
 		}
 		
@@ -116,7 +129,7 @@ public class CHEditorRest {
 		if (result.hasErrors()) {
 			res.setRet(false);
 			res.setMessage(message);
-			return res.getMessage();
+			return res;
 		}
 
 		System.out.println("Clazz == ClazzForm");
@@ -129,10 +142,10 @@ public class CHEditorRest {
 			e.printStackTrace();
 			res.setRet(false);
 			res.setMessage("cid '" + c.getCid() + "' already exists.");
-			return res.getMessage();
+			return res;
 		}
 		System.out.println(res.getMessage());
-		return res.getMessage();
+		return res;
 	}
 
 
@@ -141,14 +154,15 @@ public class CHEditorRest {
 	public Response createClass(@RequestBody @Valid Clazzes clazzes, BindingResult result) {
 		Response res = new Response();
 		message = "";
-		if (!clazzes.isNull()) {
+		if (!clazzes.isNull()) {//if it does contain anything in Clazz[]
 			for (Clazz c : clazzes.getClasses()) {//Clazzes
-				res.setMessage(create(c,result));
+				System.out.println(c.getName());
+				res = create(c,result);
 			}
 		}
-		else {
+		else {//if does not contain something in Clazz[]
 				Clazz c2 = new Clazz(clazzes.getClazzForm());//ClazzForm
-				res.setMessage(create(c2, result));
+				res = create(c2, result);
 		}
 		return res;
 	}
@@ -156,7 +170,9 @@ public class CHEditorRest {
 	@GetMapping("getclass/{cid}")
 	public Object readClass(@PathVariable int cid) {
 		Response res = new Response();
-		Clazz c = cRepo.findByCid(cid);
+		Clazz c = null;
+		
+		c = cRepo.findByCid(cid);
 		
 		if (c == null) {
 			res.setRet(false);
@@ -200,7 +216,7 @@ public class CHEditorRest {
 		res.setResult(false);
 		res.setMessage("cid '"+cid+"' does not exist");
 		List<Clazz> parents = new ArrayList<Clazz>();
-		SuperClazzes clazzes = new SuperClazzes();
+		SuperClazzContainer clazzes = new SuperClazzContainer();
 		boolean search = true;
 		while (search) {
 			Clazz c = null;
@@ -220,6 +236,49 @@ public class CHEditorRest {
 			return clazzes;
 		}
 		return res;
+	}
+	
+	@GetMapping("subclasses/{cid}")
+	public Object getSubClasses(@PathVariable Integer cid) {
+		Response res = new Response();
+		res.setRet(null);
+		res.setResult(null);
+		res.setMessage(null);
+		
+		SubClazzContainer subs = null;
+		
+		if (cid != null) {
+			subs = getSub(cid);
+			return subs;
+		}
+		
+		return res;
+	}
+	
+	public SubClazzContainer getSub(Integer cid) {
+		
+		List<Clazz> children = null;
+		SubClazzContainer subs = new SubClazzContainer();
+		
+		//TODO - ELSE return SubClazzContainer of children to previous SubClazzContainer
+		
+		//TODO - CHECK IF HAS CHILD
+		if (cid != null) {
+			children = cRepo.findListByPid(cid);
+			if (children != null) {
+			//TODO - CHECK IF Child had child
+				for (Clazz child : children) {
+					System.out.println("Child cid:"+child.getCid());
+					subs.getChildren().add(getSub(child.getCid()));
+					System.out.println("Subclass:*****"+subs.getChildren().get(0).getName());
+				}
+			}
+			//TODO RETURN 
+			return subs;
+		}
+
+		return subs;
+		
 	}
 	
 }

@@ -13,7 +13,8 @@ public abstract class AbstractClazz {
 	protected int id;
 
 	protected Integer pid;
-	protected int cid;
+	
+	protected Integer cid;
 	
 	protected String name;
 	
@@ -49,11 +50,11 @@ public abstract class AbstractClazz {
 	/**
 	 * @return the cid
 	 */
-	public abstract int getCid();
+	public abstract Integer getCid();
 	/**
 	 * @param cid the cid to set
 	 */
-	public abstract void setCid(int cid);
+	public abstract void setCid(Integer cid);
 	/**
 	 * @return the name
 	 */

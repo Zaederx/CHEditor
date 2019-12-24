@@ -53,13 +53,13 @@ public class ClazzForm extends AbstractClazz{
 	/**
 	 * @return the cid
 	 */
-	public int getCid() {
+	public Integer getCid() {
 		return cid;
 	}
 	/**
 	 * @param cid the cid to set
 	 */
-	public void setCid(int cid) {
+	public void setCid(Integer cid) {
 		this.cid = cid;
 	}
 	/**
@@ -99,6 +99,7 @@ public class ClazzForm extends AbstractClazz{
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 
 }

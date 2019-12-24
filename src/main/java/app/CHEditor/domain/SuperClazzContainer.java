@@ -7,12 +7,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 
-public class SuperClazzes {
+public class SuperClazzContainer {
 	
 	@JsonProperty("list")
 	private List<Clazz> parents;
 	
-	public SuperClazzes() {
+	public SuperClazzContainer() {
 		parents = new ArrayList<Clazz>();
 	}
 

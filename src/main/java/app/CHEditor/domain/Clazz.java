@@ -29,7 +29,7 @@ public class Clazz extends AbstractClazz {
 	Integer pid;
 	
 	@Column(nullable = false, unique = true)
-	int cid;
+	Integer cid;
 	
 	@Column(nullable = false)
 	String name;
@@ -43,7 +43,7 @@ public class Clazz extends AbstractClazz {
 		this._abstract = false;
 	}
 	
-	public Clazz (int pid, int cid, String name, boolean _abstract) {
+	public Clazz (Integer pid, Integer cid, String name, boolean _abstract) {
 		this.pid = pid;
 		this.cid = cid;
 		this.name = name;
@@ -81,13 +81,13 @@ public class Clazz extends AbstractClazz {
 	/**
 	 * @return the cid
 	 */
-	public int getCid() {
+	public Integer getCid() {
 		return cid;
 	}
 	/**
 	 * @param cid the cid to set
 	 */
-	public void setCid(int cid) {
+	public void setCid(Integer cid) {
 		this.cid = cid;
 	}
 	/**
@@ -151,4 +151,6 @@ public class Clazz extends AbstractClazz {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 }
