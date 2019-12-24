@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_NULL)
 public class Response {
 
-	boolean ret; // FIXME - CHECK WHETHER ret must be string or boolean to meet criteria?? ask professor
+	Boolean ret; // FIXME - CHECK WHETHER ret must be string or boolean to meet criteria?? ask professor
+	Boolean result;//FIXME - CHECK WITH PROFESSOR IF NECESSARY TO HAVE BOTH RET AND RESULT AS SHOUWN
 	String message;
 	
 	public Response () {
@@ -16,14 +17,26 @@ public class Response {
 	/**
 	 * @return the response
 	 */
-	public boolean isRet() {
+	public Boolean isRet() {
 		return ret;
 	}
 	/**
 	 * @param ret the response to set
 	 */
-	public void setRet(boolean ret) {
+	public void setRet(Boolean ret) {
 		this.ret = ret;
+	}
+	/**
+	 * @return the result
+	 */
+	public Boolean isResult() {
+		return result;
+	}
+	/**
+	 * @param result the result to set
+	 */
+	public void setResult(Boolean result) {
+		this.result = result;
 	}
 	/**
 	 * @return the message

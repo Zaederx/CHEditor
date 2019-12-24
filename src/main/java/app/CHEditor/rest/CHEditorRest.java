@@ -193,24 +193,25 @@ public class CHEditorRest {
 		return res;
 	}
 	
-	@GetMapping("superclasses/{pid}")
-	public Object getSuperclasses(@PathVariable Integer pid) {
+	@GetMapping("superclasses/{cid}")
+	public Object getSuperclasses(@PathVariable Integer cid) {
 		Response res = new Response();
-		res.setRet(false);
-		res.setMessage(null);
+		res.setRet(null);
+		res.setResult(false);
+		res.setMessage("cid '"+cid+"' does not exist");
 		List<Clazz> parents = new ArrayList<Clazz>();
 		SuperClazzes clazzes = new SuperClazzes();
 		boolean search = true;
 		while (search) {
 			Clazz c = null;
-			if (pid != null) {
-				c = cRepo.findByCid(pid);
+			if (cid != null) {
+				c = cRepo.findByCid(cid);
 			}
 			if (c == null) { search = false; System.out.println(search);}
 			else {
 				parents.add(c);
-				if (pid != null) {
-				pid = c.getPid();
+				if (cid != null) {
+				cid = c.getPid();
 				}
 			}
 		}
