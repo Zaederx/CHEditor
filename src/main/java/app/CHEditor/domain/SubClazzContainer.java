@@ -3,8 +3,10 @@ package app.CHEditor.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+@JsonInclude(Include.NON_EMPTY)
 public class SubClazzContainer {
 	
 	private Integer cid;
@@ -55,14 +57,15 @@ public class SubClazzContainer {
 	/**
 	 * @return the children
 	 */
-	public List<SubClazzContainer> getChildren() {
-		return children;
+	//TODO - CHANGE TO ARRAYLIST
+	public ArrayList<SubClazzContainer> getChildren() {
+		return (ArrayList<SubClazzContainer>) children;
 	}
 
 	/**
 	 * @param children the children to set
 	 */
-	public void setChildren(List<SubClazzContainer> children) {
+	public void setChildren(ArrayList<SubClazzContainer> children) {
 		this.children = children;
 	}
 	

@@ -248,28 +248,38 @@ public class CHEditorRest {
 		SubClazzContainer subs = null;
 		
 		if (cid != null) {
-			subs = getSub(cid);
+			
+			Clazz clazz = null;
+			clazz = cRepo.findByCid(cid);
+			
+			if (clazz != null) {
+				subs = getSub(clazz);
+			}
+			
 			return subs;
 		}
 		
 		return res;
 	}
 	
-	public SubClazzContainer getSub(Integer cid) {
+	public SubClazzContainer getSub(Clazz clazz) {
 		
 		List<Clazz> children = null;
 		SubClazzContainer subs = new SubClazzContainer();
+		subs.setCid(clazz.getCid());
+		subs.setName(clazz.getName());
 		
 		//TODO - ELSE return SubClazzContainer of children to previous SubClazzContainer
 		
 		//TODO - CHECK IF HAS CHILD
-		if (cid != null) {
-			children = cRepo.findListByPid(cid);
+		if (clazz != null) {
+			children = cRepo.findListByPid(clazz.getCid());
 			if (children != null) {
 			//TODO - CHECK IF Child had child
 				for (Clazz child : children) {
-					System.out.println("Child cid:"+child.getCid());
-					subs.getChildren().add(getSub(child.getCid()));
+					int childCid = child.getCid();
+					SubClazzContainer s = getSub(child);
+					subs.getChildren().add(s);
 					System.out.println("Subclass:*****"+subs.getChildren().get(0).getName());
 				}
 			}
