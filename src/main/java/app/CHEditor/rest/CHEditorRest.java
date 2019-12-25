@@ -231,7 +231,9 @@ public class CHEditorRest {
 				}
 			}
 		}
+
 		if (!parents.isEmpty()) {
+			parents.remove(0);//remove initial class
 			clazzes.setParents(parents);
 			return clazzes;
 		}
@@ -277,9 +279,7 @@ public class CHEditorRest {
 			if (children != null) {
 			//TODO - CHECK IF Child had child
 				for (Clazz child : children) {
-					int childCid = child.getCid();
-					SubClazzContainer s = getSub(child);
-					subs.getChildren().add(s);
+					subs.getChildren().add(getSub(child));
 					System.out.println("Subclass:*****"+subs.getChildren().get(0).getName());
 				}
 			}
