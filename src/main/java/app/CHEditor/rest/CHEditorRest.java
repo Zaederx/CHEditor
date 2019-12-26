@@ -284,7 +284,7 @@ public class CHEditorRest {
 				}
 			}
 			//TODO RETURN 
-			return subs;
+//			return subs;
 		}
 
 		return subs;
