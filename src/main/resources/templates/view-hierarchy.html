@@ -14,8 +14,8 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <!-- <script src="jquery.min.js"></script> -->
-<script src="tree.jquery.js"></script>
-<link rel="stylesheet" href="jqtree.css"/>
+<script src="/tree.jquery.js"></script>
+<link rel="stylesheet" href="/jqtree.css"/>
 <meta charset="UTF-8">
 <title>View Hierarchy</title>
 </head>
@@ -33,20 +33,32 @@
 
 </body>
 <script>
-var data = "";
-var url = "";
-
-
-function getData() {
+var url = "/cheditor/api/browse";
+var response = "";
+function getTree(){
 	$('#tree').tree({
-		data: data
-	})
+		data:response,
+		autoOpen: true,
+		dragAndDrop:true
+	});
 }
 
-$(document).ready(function()) {
-	$.getJSON(url, getData())
-	
+function getData(data) {
+	console.log("called getData")
+	var str = JSON.stringify(data);
+	response = JSON.parse(str);
+	console.log('Response'+response);
+	getTree();
 }
+
+$(document).ready(function() {
+	$.ajax({
+		type:"GET",
+		url:url,
+		success:getData
+		});
+});
+
 
 </script>
 </html>
