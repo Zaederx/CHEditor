@@ -8,9 +8,9 @@ import app.CHEditor.domain.Clazz;
 
 public interface ClazzRepository extends CrudRepository<Clazz, Integer> {
 
-	List<Clazz> findListByPid(int pid);
-	Clazz findByPid(int pid);
-	Clazz findByCid(int cid);
+	List<Clazz> findListByPid(Integer pid);
+	Clazz findByPid(Integer pid);
+	Clazz findByCid(Integer cid);
 	Clazz findByName(String name);
 	List<Clazz> findBy_abstract(String _abstract);//has to be named this way to avoid errors
 }

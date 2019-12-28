@@ -264,6 +264,11 @@ public class CHEditorRest {
 		return res;
 	}
 	
+	/**
+	 * Returns the subclazzes of one given clazz.
+	 * @param clazz - class you want subclazzes of 
+	 * @return SubClazzContainer - with all subclazzes
+	 */
 	public SubClazzContainer getSub(Clazz clazz) {
 		
 		List<Clazz> children = null;
@@ -289,6 +294,48 @@ public class CHEditorRest {
 
 		return subs;
 		
+	}
+	/**
+	 * Returns subclazzes for multiple clazzes.
+	 * Note: SubClazzContainer contain information for just one 
+	 * hierarchy. A list SubClazzContainers  means essentially 
+	 * multiple start nodes being returned.
+	 * @param clazzes
+	 * @return List<SubClazzContainer>
+	 */
+	public List<SubClazzContainer> getMultipleSubs(List<Clazz> clazzes) {
+		
+		List<SubClazzContainer> subsList = new ArrayList<SubClazzContainer>();
+		
+		//TODO - Performs getSub for each clazz
+		if (clazzes != null) {
+			for (Clazz c : clazzes) {
+				subsList.add(getSub(c));
+			}
+		}
+		
+		return subsList;
+		
+	}
+	
+	/**
+	 * Return hierachy of subclazzes from each base class.
+	 * @return List<SubClazzContainer>
+	 */
+	@GetMapping("browse")
+	public List<SubClazzContainer> browse () {
+		//FIND list of all top level classes
+		List<Clazz> clazzes = null;
+		List<SubClazzContainer> subsList = new ArrayList<SubClazzContainer>();
+		
+		clazzes = cRepo.findListByPid(null);
+		
+		//TODO - get all top level clazzes sub clazzes
+		if (clazzes != null) {
+			subsList = getMultipleSubs(clazzes);
+		}
+		
+		return subsList;
 	}
 	
 }

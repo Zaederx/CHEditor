@@ -12,10 +12,41 @@
 
 <!-- JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+<!-- <script src="jquery.min.js"></script> -->
+<script src="tree.jquery.js"></script>
+<link rel="stylesheet" href="jqtree.css"/>
 <meta charset="UTF-8">
 <title>View Hierarchy</title>
 </head>
 <body>
+<div class="jumbotron text-center">
+<h1>View Hierarchy</h1>
+</div>
+
+<div class="container text-center col-sm-2">
+
+<div id="tree"></div>
+
+
+</div>
 
 </body>
+<script>
+var data = "";
+var url = "";
+
+
+function getData() {
+	$('#tree').tree({
+		data: data
+	})
+}
+
+$(document).ready(function()) {
+	$.getJSON(url, getData())
+	
+}
+
+</script>
 </html>
