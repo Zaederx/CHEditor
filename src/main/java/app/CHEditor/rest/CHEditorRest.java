@@ -33,7 +33,7 @@ import app.CHEditor.validation.ClazzValidator;
 import app.CHEditor.validation.CreateClazzValidator;
 
 @RestController
-@RequestMapping("cheditor/api/")
+@RequestMapping({"cheditor/api/",""})
 public class CHEditorRest {
 	
 	@Autowired
@@ -50,20 +50,60 @@ public class CHEditorRest {
 	@Transactional
 	@GetMapping("addclass")
 	public Response createClass(@RequestParam(required = true) Integer pid, @RequestParam Integer cid,
-		@RequestParam String name, @RequestParam(name = "abstract") boolean _abstract) {
+		@RequestParam String name, @RequestParam(name = "abstract", required = false) Boolean _abstract) {
 		Clazz c = new Clazz();
+		Response res = new Response();
+		String message = "";
+//		https://localhost:8090/addclass?name=People&cid=13&pid=12&abstract=true
+		boolean cidCheck = false;
+		boolean pidCheck = false;
+		boolean nameCheck = false;
 		
-		c.setPid(pid);
-		c.setCid(cid);
-		c.setName(name);
-		c.setAbstract_(_abstract);
+		Clazz check = null;
+		//TODO Set pid if does not already exist
+		if (pid!=null) {
+			check = cRepo.findByCid(pid);
+			if (check == null) {
+				message += "pid "+pid+" not found.";
+				System.out.println("message:"+message);
+			} else {
+			pidCheck = true;
+			}
+		} else {
+			pidCheck = true;
+		}
+		
+		
+		//Set CID IF Does not already exist
+		if (cid != null) {
+			check = null;
+			check = cRepo.findByCid(cid);
+			if (check != null) {
+				message += "cid "+cid+" already exists.";
+				System.out.println("message:"+message);
+			} else {
+				cidCheck = true;
+			}
+		}
+		
+		//Abstract
+		if (_abstract == null) {
+			_abstract = false;
+		}
 		
 		//TODO - EXCEPTION HANDLNIG FOR THIS METHOD
-		cRepo.save(c);
+		if (cidCheck && pidCheck) {
+			c = new Clazz(pid,cid,name,_abstract);
+			cRepo.save(c);
+		} else {
+			res.setRet(false);
+			res.setMessage(message);
+			return res;
+		}
 		
-		Response res = new Response();
+		
 		res.setRet(true);
-		res.setMessage("Class '"+c.getName()+"' added.");
+		res.setMessage(null);
 		return res;
 	}
 	

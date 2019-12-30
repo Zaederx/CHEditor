@@ -22,18 +22,43 @@
 </head>
 <body>
 <div class="jumbotron text-center">
-<h1>View Hierarchy</h1>
+<h1>CHEditor View</h1>
+<div class="navbar navbar-expand-sm bg-dark">
+			<div class="navbar-header">
+				<a class="navbar-brand text-light" th:href="@{/}">CHEditor App</a>
+			</div>
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
+				<li class="nav-item"><a class="nav-link active text-info">View Hierarchy</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/}">Search Hierarchy</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/}">Search Hierarchy</a></li>
+			</ul>
+	</div>
 </div>
 
-<div class="container text-center col-sm-2">
+<div class="container text-center justify-content-center">
 
-<div id="tree"></div>
-
+<div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
+<br><br><br>
+<form id="classForm" class="container col-sm-8" th:action="@{/addclass}" method="GET" >
+	<label>Class Name</label>
+	<input onfocus="" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
+	<label>Class Id</label>
+	<input onfocus="" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
+	<label>Parent Id</label>
+	<input onfocus="" id="pid" type="text" class="form-control" name="pid" placeholder="ParentClass"></input>
+	<label>Abstract</label>
+	<input type="checkbox" class="form-control" name="abstract" value=true >
+	
+	<input type="submit" class="btn btn-primary" value="Add Class">
+</form>
 
 </div>
 
 </body>
 <script>
+
+
 var url = "/cheditor/api/browse";
 var response = "";
 function getTree(){
@@ -63,12 +88,26 @@ function parseFieldsToJQTree(data) {
 	return d;
 }
 
+function addClass() {
+	var name = $('name').val();
+	var cid = $('cid').val();
+	var pid = $('pid').val();
+	var ab = $('abstract').val();
+	$.ajax({
+		type:"GET",
+		url: "/addclass/"//,
+		/* success: */
+	});
+}
+
 $(document).ready(function() {
 	$.ajax({
 		type:"GET",
 		url:url,
 		success:getData
 		});
+	
+	
 });
 
 

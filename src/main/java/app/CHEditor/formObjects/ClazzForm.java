@@ -79,8 +79,8 @@ public class ClazzForm extends AbstractClazz{
 	 * @return the _abstract
 	 */
 	@JsonProperty("abstract")
-	public boolean isAbstract_() {
-		return _abstract;
+	public String isAbstract_() {
+		return _abstract.toString();
 	}
 	/**
 	 * @param _abstract the abstract_ to set
@@ -98,6 +98,17 @@ public class ClazzForm extends AbstractClazz{
 	public void setClasses() {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void setAbstract_(Boolean _abstract) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@JsonIgnore
+	@Override
+	public Boolean isAbstractBoolean() {
+		return this._abstract;
 	}
 	
 

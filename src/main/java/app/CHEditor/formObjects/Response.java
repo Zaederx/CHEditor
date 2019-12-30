@@ -2,6 +2,7 @@ package app.CHEditor.formObjects;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(Include.NON_NULL)
 public class Response {
@@ -12,13 +13,21 @@ public class Response {
 	
 	public Response () {
 		this.ret = false;
+		this.result = null;
 		this.message = "Default Error message";
 	}
 	/**
 	 * @return the response
 	 */
-	public Boolean isRet() {
-		return ret;
+	/*
+	 * Note: @JSONProperty needed as return type does not match ret field.
+	 */
+	@JsonProperty("ret")
+	public String isRet() {
+		if (ret == null) {
+			return null;
+		}
+		return ret.toString();
 	}
 	/**
 	 * @param ret the response to set
@@ -29,8 +38,12 @@ public class Response {
 	/**
 	 * @return the result
 	 */
-	public Boolean isResult() {
-		return result;
+	@JsonProperty("result")
+	public String isResult() {
+		if (result == null) {
+			return null;
+		}
+		return result.toString();
 	}
 	/**
 	 * @param result the result to set

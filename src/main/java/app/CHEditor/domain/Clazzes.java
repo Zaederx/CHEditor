@@ -122,16 +122,21 @@ public class Clazzes extends AbstractClazz {
 		this.name = name;
 	}
 	@Override
-	public boolean isAbstract_() {
-		return this._abstract;
+	public String isAbstract_() {
+		return this._abstract.toString();
 	}
 	@Override
-	public void setAbstract_(boolean _abstract) {
+	public void setAbstract_(Boolean _abstract) {
 		this._abstract = _abstract;
 	}
 	@Override
 	public void setClasses() {
 	
+	}
+	@JsonIgnore
+	@Override
+	public Boolean isAbstractBoolean() {
+		return this._abstract;
 	}
 
 }

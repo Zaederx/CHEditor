@@ -19,7 +19,7 @@ public abstract class AbstractClazz {
 	protected String name;
 	
 	@JsonProperty("abstract")
-	protected boolean _abstract;
+	protected Boolean _abstract;
 	
 	
 	/**
@@ -67,12 +67,14 @@ public abstract class AbstractClazz {
 	 * @return the _abstract
 	 */
 //	@JsonProperty("abstract")
-	public abstract boolean isAbstract_();
+	public abstract String isAbstract_();
 	/**
 	 * @param _abstract the abstract_ to set
 	 */
 //	@JsonProperty("abstract")
-	public abstract void setAbstract_(boolean _abstract);
+	public abstract void setAbstract_(Boolean _abstract);
+	
+	public abstract Boolean isAbstractBoolean();
 	
 	public abstract Clazz[] getClasses();
 	

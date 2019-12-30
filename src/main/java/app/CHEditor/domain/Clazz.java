@@ -14,7 +14,11 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 import app.CHEditor.formObjects.ClazzForm;
 
-
+/**
+ * Entity Class used to 
+ * @author Zachary Ishmael
+ *
+ */
 @Entity
 @JsonRootName("class")
 @JsonInclude(Include.NON_NULL)
@@ -36,14 +40,14 @@ public class Clazz extends AbstractClazz {
 	
 	@Column
 	@JsonProperty("abstract")
-	boolean _abstract;
+	Boolean _abstract;
 	
 	/*Required by 	Spring entity management*/
 	public Clazz () {
 		this._abstract = false;
 	}
 	
-	public Clazz (Integer pid, Integer cid, String name, boolean _abstract) {
+	public Clazz (Integer pid, Integer cid, String name, Boolean _abstract) {
 		this.pid = pid;
 		this.cid = cid;
 		this.name = name;
@@ -55,7 +59,7 @@ public class Clazz extends AbstractClazz {
 		this.pid = form.getPid();
 		this.cid = form.getCid();
 		this.name = form.getName();
-		this._abstract = form.isAbstract_();
+		this._abstract = form.isAbstractBoolean();
 
 	}
 	
@@ -63,7 +67,7 @@ public class Clazz extends AbstractClazz {
 		this.pid = c.getPid();
 		this.cid = c.getCid();
 		this.name = c.getName();
-		this._abstract = c.isAbstract_();
+		this._abstract = c.isAbstractBoolean();
 	}
 	
 	/**
@@ -107,14 +111,14 @@ public class Clazz extends AbstractClazz {
 	 * @return the _abstract
 	 */
 	@JsonProperty("abstract")
-	public boolean isAbstract_() {
-		return _abstract;
+	public String isAbstract_() {
+		return _abstract.toString();
 	}
 	/**
 	 * @param _abstract the abstract_ to set
 	 */
 	@JsonProperty("abstract")
-	public void setAbstract_(boolean _abstract) {
+	public void setAbstract_(Boolean _abstract) {
 		this._abstract = _abstract;
 	}
 
@@ -150,6 +154,12 @@ public class Clazz extends AbstractClazz {
 	public void setClasses() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@JsonIgnore
+	@Override
+	public Boolean isAbstractBoolean() {
+		return this._abstract;
 	}
 
 	
