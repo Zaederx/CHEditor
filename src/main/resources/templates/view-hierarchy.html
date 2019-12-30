@@ -40,26 +40,27 @@
 
 <div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
 <br><br><br>
-<form id="classForm" class="container col-sm-8" th:action="@{/addclass}" method="GET" >
+<p id="message" class="bg-info" hidden="true">Added Succesfully</p>
+<form id="classForm" class="container col-sm-8" method="GET" >
 	<label>Class Name</label>
-	<input onfocus="" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
+	<input onfocus="setInputURL('isValid/name/');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
 	<label>Class Id</label>
-	<input onfocus="" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
+	<input onfocus="setInputURL('isValid/cid/');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
 	<label>Parent Id</label>
-	<input onfocus="" id="pid" type="text" class="form-control" name="pid" placeholder="ParentClass"></input>
+	<input onfocus="setInputURL('isValid/pid/');" id="pid" type="text" class="form-control" name="pid" placeholder="ParentClass"></input>
 	<label>Abstract</label>
 	<input type="checkbox" class="form-control" name="abstract" value=true >
 	
-	<input type="submit" class="btn btn-primary" value="Add Class">
+	<input id="submit" type="submit" class="btn btn-primary" onsubmit="addClass();" value="Add Class">
 </form>
 
 </div>
 
 </body>
 <script>
-
-
-var url = "/cheditor/api/browse";
+var inputFieldId = "name";
+var formURL = "/cheditor/api/browse";
+var inputURL = "";
 var response = "";
 function getTree(){
 	$('#tree').tree({
@@ -68,6 +69,12 @@ function getTree(){
 		dragAndDrop:true,
 		saveState:true
 	});
+}
+
+function getResponse(data) {
+	var str = JSON.stringify(data);
+	res = JSON.parse(str);
+	
 }
 
 function getData(data) {
@@ -87,6 +94,18 @@ function parseFieldsToJQTree(data) {
 	d = JSON.parse(d);
 	return d;
 }
+function setFormURL() {
+	
+
+}
+function setInputURL(url){
+	inputURL = url;
+	inputURL += $(inputFieldId).val();
+}
+
+/*Called by submit button
+ * 
+ * Posts Form */
 
 function addClass() {
 	var name = $('name').val();
@@ -95,20 +114,57 @@ function addClass() {
 	var ab = $('abstract').val();
 	$.ajax({
 		type:"GET",
-		url: "/addclass/"//,
-		/* success: */
+		url: "/addclass?cid="+cid+"&name="+name+"&abstract="+ab+"pid="+pid,
+		success: function(data) {
+			var str = stringify(data);
+			var res = JSON.parse(str);
+			if (res.ret == true) {
+				$('message').attr('hidden', 'false');
+			}
+			requestTreeData();
+		}
 	});
 }
 
-$(document).ready(function() {
+function requestTreeData() {
 	$.ajax({
 		type:"GET",
-		url:url,
+		url:formURL,
 		success:getData
 		});
-	
-	
-});
+}
+
+$(document).ready(perform());
+
+function validateForm () {
+	$(':input').keyup(function() {
+		$.ajax({
+			type: "GET",
+			url: inputURL,
+			success: function (result) {
+				var str = JSON.stringify(result);
+				var res = JSON.parse(str);
+				if (res.ret == false) {
+					$('submit').attr("disabled", true);
+					$('message').html(res.message);
+					$('message').show();
+				} else {
+					$('submit').attr("disabled", false);
+					$('message').html("");
+					$('message').hide();
+				}
+			}
+		});
+	})
+}
+
+
+function perform() {
+	validateForm();
+	requestTreeData();
+}
+
+
 
 
 </script>
