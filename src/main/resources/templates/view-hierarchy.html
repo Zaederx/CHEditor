@@ -48,18 +48,17 @@ function getTree(){
 function getData(data) {
 	console.log("called getData")
  	var str = JSON.stringify(data);
-	console.log("JSON str:"+str);
+	console.log("JSON:"+str);
 	response = parseFieldsToJQTree(str);
-	/* response = JSON.parse(str); */
-	/* response = [{"cid":99,"name":"VehicleJSON","children":[{"cid":24,"name":"Rowingboat"},{"cid":25,"name":"Gondola"}]}]; */
-/* 	[{"cid":99,"name":"VehicleJSON","superclassOf":[{"cid":24,"name":"Rowingboat"},{"cid":25,"name":"Gondola"}]}"; */
+
 	console.log('Response'+response);
 	getTree();
 }
 
 function parseFieldsToJQTree(data) {
-	var d = data.replace('cid','id');
-	d = d.replace('superclassOf','children');
+	var d = data.replace(/cid/g,'id');
+	d = d.replace(/superclassOf/g,'children');
+	console.log("jqTreeJSON:"+d);
 	d = JSON.parse(d);
 	return d;
 }
