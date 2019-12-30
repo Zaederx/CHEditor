@@ -16,6 +16,7 @@
 <!-- <script src="jquery.min.js"></script> -->
 <script type="text/javascript" th:src="@{/jqtree/tree.jquery.js}"></script>
 <link rel="stylesheet" th:href="@{/jqtree/jqtree.css}"/>
+
 <meta charset="UTF-8">
 <title>View Hierarchy</title>
 </head>
@@ -39,16 +40,28 @@ function getTree(){
 	$('#tree').tree({
 		data:response,
 		autoOpen: true,
-		dragAndDrop:true
+		dragAndDrop:true,
+		saveState:true
 	});
 }
 
 function getData(data) {
 	console.log("called getData")
-	var str = JSON.stringify(data);
-	response = JSON.parse(str);
+ 	var str = JSON.stringify(data);
+	console.log("JSON str:"+str);
+	response = parseFieldsToJQTree(str);
+	/* response = JSON.parse(str); */
+	/* response = [{"cid":99,"name":"VehicleJSON","children":[{"cid":24,"name":"Rowingboat"},{"cid":25,"name":"Gondola"}]}]; */
+/* 	[{"cid":99,"name":"VehicleJSON","superclassOf":[{"cid":24,"name":"Rowingboat"},{"cid":25,"name":"Gondola"}]}"; */
 	console.log('Response'+response);
 	getTree();
+}
+
+function parseFieldsToJQTree(data) {
+	var d = data.replace('cid','id');
+	d = d.replace('superclassOf','children');
+	d = JSON.parse(d);
+	return d;
 }
 
 $(document).ready(function() {
