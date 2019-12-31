@@ -41,7 +41,7 @@
 <div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
 <br><br><br>
 <div id="messageInfo" class="bg-info" >Added Succesfully</div>
-<form id="classForm" class="container col-sm-8" method="GET" >
+<form id="classForm" class="container col-sm-8" >
 	<label>Class Name</label>
 	<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
 	<label>Class Id</label>
@@ -51,8 +51,9 @@
 	<label>Abstract</label>
 	<input type="checkbox" class="form-control" name="abstract" value=true >
 	
-	<input id="submit" type="submit" class="btn btn-primary" onsubmit="addClass();"  value="Add Class">
+	
 </form>
+<button id="submit" class="btn btn-primary" onclick="addClass();"  value="Add Class">Add Class</button>
 
 </div>
 
@@ -106,23 +107,26 @@ function setInput(id){
 }
 
 function setURL(){
-inputURL = address + $(inputFieldId).val();
- }/*Called by submit button
+	inputURL = address + $(inputFieldId).val();
+}/*Called by submit button
  * 
  * Posts Form */
 
 function addClass() {
-	var form = $('classForm').serialise();
+	var form = $('#classForm').serialize();
+	var url = "/cheditor/api/addclass?"+form;
 	$.ajax({
 		type:"GET",
-		url: "/addclass?"+form,
+		url: url,
 		success: function(data) {
-			var str = stringify(data);
+			requestTreeData();
+			$('#tree').reload();
+			var str = JSON.stringify(data);
 			var res = JSON.parse(str);
 			if (res.ret == true) {
 				$('#messageInfo').attr('hidden', 'false');
 			}
-			requestTreeData();
+			
 		}
 	});
 }
@@ -133,6 +137,7 @@ function requestTreeData() {
 		url:formURL,
 		success:getData
 		});
+	
 }
 
 $(document).ready(validateForm());
@@ -152,10 +157,14 @@ function validateForm () {
 				var ret = res.ret;
 				if (ret == false) {
 					$('#submit').attr("disabled", true);
+					$('#submit').removeClass("btn-primary");
+					$('#submit').addClass("btn-secondary");
 					$('#messageInfo').html(res.message);
 					$('#messageInfo').show();
 				} else {
 					$('#submit').attr("disabled", false);
+					$('#submit').removeClass("btn-secondary");
+					$('#submit').addClass("btn-primary");
 					$('#messageInfo').html("");
 					$('#messageInfo').hide();
 				}
