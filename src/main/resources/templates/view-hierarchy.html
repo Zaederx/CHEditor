@@ -65,6 +65,7 @@ var inputURL = "";
 var address = "";
 var response = "";
 function getTree(){
+	console.log("******getTree() called******");
 	$('#tree').tree({
 		data:response,
 		autoOpen: true,
@@ -73,14 +74,14 @@ function getTree(){
 	});
 }
 
-function getResponse(data) {
+/* function getResponse(data) {
 	var str = JSON.stringify(data);
 	res = JSON.parse(str);
 	
-}
+} */
 
 function getData(data) {
-	console.log("called getData")
+	console.log("*******getData called****")
  	var str = JSON.stringify(data);
 	console.log("JSON:"+str);
 	response = parseFieldsToJQTree(str);
@@ -90,6 +91,7 @@ function getData(data) {
 }
 
 function parseFieldsToJQTree(data) {
+	console.log("********parseFieldsToJQTree called********");
 	var d = data.replace(/cid/g,'id');
 	d = d.replace(/superclassOf/g,'children');
 	console.log("jqTreeJSON:"+d);
@@ -101,6 +103,7 @@ function setFormURL() {
 
 }
 function setInput(id){
+	console.log("******setInput called******");
 	console.log("inputId = "+ id);
 	inputFieldId = "#"+id;
 	address = "/cheditor/api/isValid/"+id+"/";
@@ -113,14 +116,15 @@ function setURL(){
  * Posts Form */
 
 function addClass() {
+	console.log("******addClass called******");
 	var form = $('#classForm').serialize();
 	var url = "/cheditor/api/addclass?"+form;
 	$.ajax({
 		type:"GET",
 		url: url,
 		success: function(data) {
+			$('#tree').tree('destroy');
 			requestTreeData();
-			$('#tree').reload();
 			var str = JSON.stringify(data);
 			var res = JSON.parse(str);
 			if (res.ret == true) {
@@ -132,6 +136,7 @@ function addClass() {
 }
 
 function requestTreeData() {
+	console.log("*******REQUESTING TREE DATA*****");
 	$.ajax({
 		type:"GET",
 		url:formURL,
@@ -146,6 +151,7 @@ function validateForm () {
 	requestTreeData();
 	$('#messageInfo').hide();
 	$(':input').keyup(function() {
+		console.log("******validateForm called*******");
 		setURL();
 		$('#messageInfo').hide();
 		$.ajax({
