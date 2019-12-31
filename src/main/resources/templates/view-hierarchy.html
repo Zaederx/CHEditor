@@ -40,27 +40,28 @@
 
 <div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
 <br><br><br>
-<p id="message" class="bg-info" hidden="true">Added Succesfully</p>
+<div id="messageInfo" class="bg-info" >Added Succesfully</div>
 <form id="classForm" class="container col-sm-8" method="GET" >
 	<label>Class Name</label>
-	<input onfocus="setInputURL('isValid/name/');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
+	<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
 	<label>Class Id</label>
-	<input onfocus="setInputURL('isValid/cid/');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
+	<input onfocus="setInput('cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
 	<label>Parent Id</label>
-	<input onfocus="setInputURL('isValid/pid/');" id="pid" type="text" class="form-control" name="pid" placeholder="ParentClass"></input>
+	<input onfocus="setInput('pid');" id="pid" type="text" class="form-control" name="pid" placeholder="ParentClass"></input>
 	<label>Abstract</label>
 	<input type="checkbox" class="form-control" name="abstract" value=true >
 	
-	<input id="submit" type="submit" class="btn btn-primary" onsubmit="addClass();" value="Add Class">
+	<input id="submit" type="submit" class="btn btn-primary" onsubmit="addClass();"  value="Add Class">
 </form>
 
 </div>
 
 </body>
 <script>
-var inputFieldId = "name";
+var inputFieldId = "#name";
 var formURL = "/cheditor/api/browse";
 var inputURL = "";
+var address = "";
 var response = "";
 function getTree(){
 	$('#tree').tree({
@@ -98,28 +99,28 @@ function setFormURL() {
 	
 
 }
-function setInputURL(url){
-	inputURL = url;
-	inputURL += $(inputFieldId).val();
+function setInput(id){
+	console.log("inputId = "+ id);
+	inputFieldId = "#"+id;
+	address = "/cheditor/api/isValid/"+id+"/";
 }
 
-/*Called by submit button
+function setURL(){
+inputURL = address + $(inputFieldId).val();
+ }/*Called by submit button
  * 
  * Posts Form */
 
 function addClass() {
-	var name = $('name').val();
-	var cid = $('cid').val();
-	var pid = $('pid').val();
-	var ab = $('abstract').val();
+	var form = $('classForm').serialise();
 	$.ajax({
 		type:"GET",
-		url: "/addclass?cid="+cid+"&name="+name+"&abstract="+ab+"pid="+pid,
+		url: "/addclass?"+form,
 		success: function(data) {
 			var str = stringify(data);
 			var res = JSON.parse(str);
 			if (res.ret == true) {
-				$('message').attr('hidden', 'false');
+				$('#messageInfo').attr('hidden', 'false');
 			}
 			requestTreeData();
 		}
@@ -134,34 +135,37 @@ function requestTreeData() {
 		});
 }
 
-$(document).ready(perform());
+$(document).ready(validateForm());
 
 function validateForm () {
+	requestTreeData();
+	$('#messageInfo').hide();
 	$(':input').keyup(function() {
+		setURL();
+		$('#messageInfo').hide();
 		$.ajax({
 			type: "GET",
 			url: inputURL,
 			success: function (result) {
 				var str = JSON.stringify(result);
 				var res = JSON.parse(str);
-				if (res.ret == false) {
-					$('submit').attr("disabled", true);
-					$('message').html(res.message);
-					$('message').show();
+				var ret = res.ret;
+				if (ret == false) {
+					$('#submit').attr("disabled", true);
+					$('#messageInfo').html(res.message);
+					$('#messageInfo').show();
 				} else {
-					$('submit').attr("disabled", false);
-					$('message').html("");
-					$('message').hide();
+					$('#submit').attr("disabled", false);
+					$('#messageInfo').html("");
+					$('#messageInfo').hide();
 				}
 			}
 		});
+		
 	})
-}
 
 
-function perform() {
-	validateForm();
-	requestTreeData();
+	
 }
 
 

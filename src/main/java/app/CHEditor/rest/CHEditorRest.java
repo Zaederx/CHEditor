@@ -60,6 +60,7 @@ public class CHEditorRest {
 		boolean nameCheck = false;
 		
 		Clazz check = null;
+		
 		//TODO Set pid if does not already exist
 		if (pid!=null) {
 			check = cRepo.findByCid(pid);
@@ -95,6 +96,7 @@ public class CHEditorRest {
 		if (cidCheck && pidCheck) {
 			c = new Clazz(pid,cid,name,_abstract);
 			cRepo.save(c);
+			System.out.println("*******Class Added ********");
 		} else {
 			res.setRet(false);
 			res.setMessage(message);
@@ -374,5 +376,79 @@ public class CHEditorRest {
 		
 		return subsList;
 	}
+	
+	/**isValidName***/
+	@GetMapping("isValid/name/{name}")
+	public Response isValidName(@PathVariable String name) {
+		Response res = new Response();
+		res.setMessage(null);
+		
+		if (name.isBlank()) {
+			res.setRet(false);
+			res.setMessage("name is blank");
+			return res;
+		}
+		
+		Clazz c = null;
+		c = cRepo.findByName(name);
+		
+		if (c != null) {
+			res.setRet(false);
+			res.setMessage("class name "+name+" already exists.");
+			return res;
+		}
+		
+		res.setRet(true);
+		
+		return res;
+	}
+	
+	/**isValidPid***/
+	@GetMapping("isValid/pid/{pid}")
+	public Response isValidPid(@PathVariable Integer pid) {
+		Response res = new Response();
+		
+		
+		if (pid != null) {
+			Clazz c = null;
+			c = cRepo.findByCid(pid);
+			if (c == null) {
+				res.setRet(false);
+				res.setMessage("pid "+pid+" is not found.");
+				return res;
+			}
+		}
+		
+		res.setRet(true);
+		
+		return res;
+	}
+	
+	/*isValidCid*/
+	@GetMapping("isValid/cid/{cid}")
+	public Response isValidCid(@PathVariable Integer cid) {
+		Response res = new Response();
+		res.setMessage(null);
+		if (cid == null) {
+			res.setRet(false);
+			res.setMessage("cid is blank");
+			return res;
+		}
+		
+		Clazz c = null;
+		c = cRepo.findByCid(cid);
+		
+		if (c != null) {
+			res.setRet(false);
+			res.setMessage("cid "+cid+" already exists.");
+			return res;
+		}
+		res.setRet(true);
+		return res;
+	}
+	
+
+	
+	
 	
 }
