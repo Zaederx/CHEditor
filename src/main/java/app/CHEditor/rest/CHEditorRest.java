@@ -6,9 +6,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,7 @@ import app.CHEditor.domain.Clazzes;
 import app.CHEditor.domain.SubClazzContainer;
 import app.CHEditor.domain.SuperClazzContainer;
 import app.CHEditor.formObjects.ClazzForm;
+import app.CHEditor.formObjects.DeleteClazzForm;
 import app.CHEditor.formObjects.Response;
 import app.CHEditor.repositories.ClazzRepository;
 import app.CHEditor.validation.ClazzValidator;
@@ -246,6 +249,27 @@ public class CHEditorRest {
 		}
 		
 		return res;
+	}
+	
+
+	@PostMapping(value = "deleteclassesJSON", consumes = {"application/json",MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+	public Response deleteClassesJSON (DeleteClazzForm json) {
+		Response res = new Response();
+		for (Integer cid : json.getToDeleteList()) {
+			Clazz c = null;
+			c = cRepo.findByCid(cid);
+			
+			if (c!=null) {
+				cRepo.delete(c);
+				res.setRet(true);
+				res.setMessage(null);
+			} else {
+				res.setRet(false);
+				res.setMessage("cid "+cid+" does not exist");
+			}
+		}
+		
+		return null;
 	}
 	
 	@GetMapping("superclasses/{cid}")

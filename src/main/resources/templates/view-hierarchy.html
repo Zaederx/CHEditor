@@ -55,6 +55,8 @@
 </form>
 <button id="submit" class="btn btn-primary" onclick="addClass();"  value="Add Class">Add Class</button>
 
+
+<button id="delete-btn" class="btn btn-primary" onclick="deleteClass();">Delete Class</button>
 </div>
 
 </body>
@@ -64,13 +66,23 @@ var formURL = "/cheditor/api/browse";
 var inputURL = "";
 var address = "";
 var response = "";
+var toDelete;
+var toDeleteList = [];
 function getTree(){
 	console.log("******getTree() called******");
 	$('#tree').tree({
 		data:response,
 		autoOpen: true,
 		dragAndDrop:true,
-		saveState:true
+		saveState:true,
+		selectable: true
+	/* 	onCanSelectNode: function (node) {
+			if (node.children.length == 0){
+				return true;
+			}
+			return false;
+		} */
+		
 	});
 }
 
@@ -98,10 +110,31 @@ function parseFieldsToJQTree(data) {
 	d = JSON.parse(d);
 	return d;
 }
-function setFormURL() {
-	
 
+function deleteClass () {
+	console.log('**********delete Class called*********')
+	nodes = $('#tree').tree('getState');
+
+	toDeleteList = nodes.selected_node;
+	
+	console.log(toDeleteList);
+	sendClassesToDelete();
+	/* sendToDelete(); */
 }
+
+function sendClassesToDelete() {
+	$.ajax({
+		type:"POST",
+		url: "/cheditor/api/deleteclassesJSON",
+		data: JSON.stringify({"toDeleteList":toDeleteList}),
+		dataType: "json",
+		success: function (result) {
+			$('#messageInfo').html("Class deleted");
+			$('#messageInfo').show();
+		}
+	});
+}
+
 function setInput(id){
 	console.log("******setInput called******");
 	console.log("inputId = "+ id);
@@ -144,6 +177,21 @@ function requestTreeData() {
 		});
 	
 }
+
+
+
+function sendToDelete(clazz) {
+	$.ajax({
+		type:"POST",
+		url: "/cheditor/api/delete/"+clazz,
+		success: function (result) {
+			$('#messageInfo').html("Class deleted");
+			$('#messageInfo').show();
+		}
+	});
+}
+
+
 
 $(document).ready(validateForm());
 
