@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -252,9 +253,10 @@ public class CHEditorRest {
 	}
 	
 
-	@PostMapping(value = {"deleteclassesJSON"}, consumes = {"application/json",MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-	public Response deleteClassesJSON (DeleteForm json) {
+	@PostMapping(value = {"deleteclassesJSON"}, consumes = {"application/json"})
+	public Response deleteClassesJSON (@RequestBody DeleteForm json) {
 		Response res = new Response();
+		
 		if (json.getToDeleteList() == null) {
 			res.setRet(false);
 			res.setMessage("no class selected.");
@@ -264,10 +266,12 @@ public class CHEditorRest {
 			Clazz c = null;
 			c = cRepo.findByCid(cid);
 			
+			//if c exists - delete
 			if (c!=null) {
 				cRepo.delete(c);
 				res.setRet(true);
 				res.setMessage(null);
+				return  res;
 			} else {
 				res.setRet(false);
 				res.setMessage("cid "+cid+" does not exist");
@@ -276,6 +280,7 @@ public class CHEditorRest {
 		}
 		res.setRet(false);
 		res.setMessage("Internal Server Error");
+		
 		return res;
 		
 	}

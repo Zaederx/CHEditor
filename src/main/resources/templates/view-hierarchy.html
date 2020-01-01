@@ -40,7 +40,7 @@
 
 <div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
 <br><br><br>
-<div id="messageInfo" class="bg-info" >Added Succesfully</div>
+<p id="messageInfo" class="bg-info"></p>
 <form id="classForm" class="container col-sm-8" >
 	<label>Class Name</label>
 	<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
@@ -75,7 +75,7 @@ function getTree(){
 		autoOpen: true,
 		dragAndDrop:true,
 		saveState:true,
-		selectable: true
+		selectable: true,
 	 	onCanSelectNode: function (node) {
 			if (node.children.length == 0){
 				return true;
@@ -119,18 +119,28 @@ function deleteClass () {
 	
 	console.log(toDeleteList);
 	sendClassesToDelete();
-	/* sendToDelete(); */
 }
 
 function sendClassesToDelete() {
+	console.log("*********sendClassesToDelete called**********");
 	$.ajax({
 		type:"POST",
 		url: "/cheditor/api/deleteclassesJSON",
 		data: JSON.stringify({"toDeleteList":toDeleteList}),
 		dataType: "json",
+	 	contentType: "application/json; charset=utf-8;",
 		success: function (result) {
-			$('#messageInfo').html("Class deleted");
-			$('#messageInfo').show();
+			var str = JSON.stringify(result);
+			var res = JSON.parse(str);
+			var ret = res.ret;
+			console.log("ret:"+ret);
+			if (ret == 'true') {
+				$('#messageInfo').text("Class deleted");
+				$('#messageInfo').show();
+			} else {
+				$('#messageInfo').text(res.message);
+				$('#messageInfo').show();
+			}
 		}
 	});
 }
@@ -160,8 +170,9 @@ function addClass() {
 			requestTreeData();
 			var str = JSON.stringify(data);
 			var res = JSON.parse(str);
-			if (res.ret == true) {
-				$('#messageInfo').attr('hidden', 'false');
+			if (res.ret == 'true') {
+				$('#messageInfo').show();
+				$('#messageInfo').text("Added Class");
 			}
 			
 		}
@@ -185,7 +196,7 @@ function sendToDelete(clazz) {
 		type:"POST",
 		url: "/cheditor/api/delete/"+clazz,
 		success: function (result) {
-			$('#messageInfo').html("Class deleted");
+			$('#messageInfo').text("Class deleted");
 			$('#messageInfo').show();
 		}
 	});
@@ -197,7 +208,7 @@ $(document).ready(validateForm());
 
 function validateForm () {
 	requestTreeData();
-	$('#messageInfo').hide();
+ 	$('#messageInfo').hide();
 	$(':input').keyup(function() {
 		console.log("******validateForm called*******");
 		setURL();
@@ -209,17 +220,17 @@ function validateForm () {
 				var str = JSON.stringify(result);
 				var res = JSON.parse(str);
 				var ret = res.ret;
-				if (ret == false) {
-					$('#submit').attr("disabled", true);
+				if (ret == 'false') {
+					$('#submit').attr("disabled", 'true');
 					$('#submit').removeClass("btn-primary");
 					$('#submit').addClass("btn-secondary");
-					$('#messageInfo').html(res.message);
+					$('#messageInfo').text(res.message);
 					$('#messageInfo').show();
 				} else {
-					$('#submit').attr("disabled", false);
+					$('#submit').attr("disabled", 'false');
 					$('#submit').removeClass("btn-secondary");
 					$('#submit').addClass("btn-primary");
-					$('#messageInfo').html("");
+				 	$('#messageInfo').text("");
 					$('#messageInfo').hide();
 				}
 			}
