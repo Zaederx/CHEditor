@@ -1,6 +1,6 @@
 package app.CHEditor.formObjects;
 
-public class DeleteClazzForm {
+public class DeleteForm {
 	Integer [] toDeleteList;
 
 	/**

@@ -29,7 +29,7 @@ import app.CHEditor.domain.Clazzes;
 import app.CHEditor.domain.SubClazzContainer;
 import app.CHEditor.domain.SuperClazzContainer;
 import app.CHEditor.formObjects.ClazzForm;
-import app.CHEditor.formObjects.DeleteClazzForm;
+import app.CHEditor.formObjects.DeleteForm;
 import app.CHEditor.formObjects.Response;
 import app.CHEditor.repositories.ClazzRepository;
 import app.CHEditor.validation.ClazzValidator;
@@ -42,7 +42,7 @@ public class CHEditorRest {
 	@Autowired
 	ClazzRepository cRepo;
 	
-	@InitBinder
+	@InitBinder("clazzes")
 	protected void initBinder(WebDataBinder binder) {
 		binder.addValidators(new CreateClazzValidator(cRepo));
 	}
@@ -133,7 +133,7 @@ public class CHEditorRest {
 		System.out.println("create c getName:"+c.getName());
 		/*Validate ClazzForm*/
 	
-		String messagePid = "pid '"+ c.getPid()+ "' not found. ";
+		String messagePid = "pid '"+ c.getPid()+ "' not found.";
 		String messageCid = "cid '"+c.getCid()+"' already exists. ";
 		String messageName = "name '"+c.getName()+"' already exists. ";
 		
@@ -252,9 +252,14 @@ public class CHEditorRest {
 	}
 	
 
-	@PostMapping(value = "deleteclassesJSON", consumes = {"application/json",MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-	public Response deleteClassesJSON (DeleteClazzForm json) {
+	@PostMapping(value = {"deleteclassesJSON"}, consumes = {"application/json",MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+	public Response deleteClassesJSON (DeleteForm json) {
 		Response res = new Response();
+		if (json.getToDeleteList() == null) {
+			res.setRet(false);
+			res.setMessage("no class selected.");
+			return res;
+		}
 		for (Integer cid : json.getToDeleteList()) {
 			Clazz c = null;
 			c = cRepo.findByCid(cid);
@@ -266,10 +271,13 @@ public class CHEditorRest {
 			} else {
 				res.setRet(false);
 				res.setMessage("cid "+cid+" does not exist");
+				return res;
 			}
 		}
+		res.setRet(false);
+		res.setMessage("Internal Server Error");
+		return res;
 		
-		return null;
 	}
 	
 	@GetMapping("superclasses/{cid}")
