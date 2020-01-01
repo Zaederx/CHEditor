@@ -331,7 +331,7 @@ public class CHEditorRest {
 			clazz = cRepo.findByCid(cid);
 			
 			if (clazz != null) {
-				subs = getSub(clazz);
+				subs = getSub(clazz,false);
 			}
 			
 			return subs;
@@ -345,12 +345,17 @@ public class CHEditorRest {
 	 * @param clazz - class you want subclazzes of 
 	 * @return SubClazzContainer - with all subclazzes
 	 */
-	public SubClazzContainer getSub(Clazz clazz) {
+	public SubClazzContainer getSub(Clazz clazz, Boolean displayCid) {
 		
 		List<Clazz> children = null;
 		SubClazzContainer subs = new SubClazzContainer();
 		subs.setCid(clazz.getCid());
-		subs.setName(clazz.getName());
+		if (displayCid) {
+			String name = clazz.getName()+" - id:"+clazz.getCid();
+			subs.setName(name);
+		} else {
+			subs.setName(clazz.getName());
+		}
 		
 		//TODO - ELSE return SubClazzContainer of children to previous SubClazzContainer
 		
@@ -360,7 +365,7 @@ public class CHEditorRest {
 			if (children != null) {
 			//TODO - CHECK IF Child had child
 				for (Clazz child : children) {
-					subs.getChildren().add(getSub(child));
+					subs.getChildren().add(getSub(child,displayCid));
 					System.out.println("Subclass:*****"+subs.getChildren().get(0).getName());
 				}
 			}
@@ -379,16 +384,23 @@ public class CHEditorRest {
 	 * @param clazzes
 	 * @return List<SubClazzContainer>
 	 */
-	public List<SubClazzContainer> getMultipleSubs(List<Clazz> clazzes) {
+	public List<SubClazzContainer> getMultipleSubs(List<Clazz> clazzes, Boolean displayCid) {
 		
 		List<SubClazzContainer> subsList = new ArrayList<SubClazzContainer>();
 		
 		//TODO - Performs getSub for each clazz
 		if (clazzes != null) {
 			for (Clazz c : clazzes) {
-				subsList.add(getSub(c));
+				subsList.add(getSub(c,displayCid));
 			}
-		}
+ 		}
+		
+		
+//		if (clazzes != null) {
+//			for (Clazz c : clazzes) {
+//				subsList.add(getSub(c));
+//			}
+//		}
 		
 		return subsList;
 		
@@ -398,17 +410,19 @@ public class CHEditorRest {
 	 * Return hierachy of subclazzes from each base class.
 	 * @return List<SubClazzContainer>
 	 */
-	@GetMapping("browse")
-	public List<SubClazzContainer> browse () {
+	@GetMapping({"browse","browse/{b}"})
+	public List<SubClazzContainer> browse (@PathVariable(required = false , name = "b") Boolean displayCid) {
 		//FIND list of all top level classes
 		List<Clazz> clazzes = null;
 		List<SubClazzContainer> subsList = new ArrayList<SubClazzContainer>();
 		
 		clazzes = cRepo.findListByPid(null);
-		
+		if (displayCid == null) {
+			displayCid = false;
+		}
 		//TODO - get all top level clazzes sub clazzes
 		if (clazzes != null) {
-			subsList = getMultipleSubs(clazzes);
+			subsList = getMultipleSubs(clazzes,displayCid);
 		}
 		
 		return subsList;
