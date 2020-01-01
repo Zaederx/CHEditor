@@ -22,7 +22,7 @@
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 <meta charset="UTF-8">
-<title>View Hierarchy</title>
+<title>Edit Hierarchy</title>
 </head>
 <body>
 <div class="jumbotron text-center">
@@ -97,7 +97,7 @@ function editClasses () {
 function showCid() {
 	console.log('*********showCid called*********');
 	
-	if (document.getElementById('cidSwitch').checked) {
+	/* if (document.getElementById('cidSwitch').checked) {
 	swithcURL ="/cheditor/api/browse/true";
 	/* switchState = 1; */
 	$.ajax({
@@ -109,7 +109,7 @@ function showCid() {
 	
 		requestTreeData();
 	/* 	switchState = 0; */
-	}
+	} */
 	
 }
 
@@ -274,7 +274,6 @@ function sendToDelete(clazz) {
 $(document).ready(validateForm());
 
 function validateForm () {
-/* 	$(function(){ $('#cidSwitch').bootstrapToggle() }); */
 	requestTreeData();
  	$('#messageInfo').hide();
 	$(':input').keyup(function() {
