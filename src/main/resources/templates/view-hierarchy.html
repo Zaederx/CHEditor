@@ -141,6 +141,8 @@ function sendClassesToDelete() {
 				$('#messageInfo').text(res.message);
 				$('#messageInfo').show();
 			}
+			$('#tree').tree('destroy');
+			requestTreeData();
 		}
 	});
 }
@@ -227,7 +229,7 @@ function validateForm () {
 					$('#messageInfo').text(res.message);
 					$('#messageInfo').show();
 				} else {
-					$('#submit').attr("disabled", 'false');
+					$('#submit').removeAttr("disabled");
 					$('#submit').removeClass("btn-secondary");
 					$('#submit').addClass("btn-primary");
 				 	$('#messageInfo').text("");

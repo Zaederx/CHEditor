@@ -441,8 +441,8 @@ public class CHEditorRest {
 	}
 	
 	/**isValidPid***/
-	@GetMapping("isValid/pid/{pid}")
-	public Response isValidPid(@PathVariable Integer pid) {
+	@GetMapping({"isValid/pid/{pid}","isValid/pid/"})
+	public Response isValidPid(@PathVariable(required = false) Integer pid) {
 		Response res = new Response();
 		
 		
