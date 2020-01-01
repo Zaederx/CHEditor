@@ -13,9 +13,13 @@
 <!-- JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-<!-- <script src="jquery.min.js"></script> -->
+<!-- jqTree -->
 <script type="text/javascript" th:src="@{/jqtree/tree.jquery.js}"></script>
 <link rel="stylesheet" th:href="@{/jqtree/jqtree.css}"/>
+
+<!-- Toggle Switches  -->
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 <meta charset="UTF-8">
 <title>View Hierarchy</title>
@@ -38,10 +42,13 @@
 
 <div class="container text-center justify-content-center">
 
-<div class="custom-control custom-switch">
+<!-- <div class="custom-control custom-switch">
 	<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();">
 	<label class="custom-control-label" for="cidSwitch">Display Class IDs</label>
-</div>
+</div> -->
+
+<input type="checkbox" data-toggle="toggle" data-on="Show IDs" data-off="Hide IDs" data-height ="10" id="cidSwitch" onchange="showCid()">
+
 <div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
 <br><br><br>
 <p id="messageInfo" class="bg-info"></p>
@@ -77,39 +84,46 @@ var switchState = 0;
 
 
 function showCid() {
-	if (switchState == 0) {
+	console.log('*********showCid called*********');
+	
+	if (document.getElementById('cidSwitch').checked) {
 	swithcURL ="/cheditor/api/browse/true";
-	switchState = 1;
+	/* switchState = 1; */
 	$.ajax({
 		type:"GET",
 		url:"/cheditor/api/browse/true",
 		success:getData
 		});
 	} else {
-		/* switchURL = "/cheditor/api/browse"; */
-		$.ajax({
-			type:"GET",
-			url:"/cheditor/api/browse",
-			success:getData
-			});
-		switchState = 0;
+	
+		requestTreeData();
+	/* 	switchState = 0; */
 	}
 	
 }
 
 function requestTreeData() {
 	console.log("*******REQUESTING TREE DATA*****");
+	if ($('#cidSwitch').checked) {
 	$.ajax({
 		type:"GET",
-		url:switchURL,
+		url:"/cheditor/api/browse/true",
 		success:getData
 		});
+	} else {
+		$.ajax({
+			type:"GET",
+			url:"/cheditor/api/browse",
+			success:getData
+			});
+	}
 	
 }
 
 function getTree(){
 	console.log("******getTree() called******");
 	$('#tree').tree('destroy');
+	/* $('#cidSwitch').bootstrapToggle('off'); */
 	$('#tree').tree({
 		data:response,
 		autoOpen: true,
@@ -124,7 +138,7 @@ function getTree(){
 		}
 		
 	});
-	$('cidSwitch').removeAttr('checked');
+	/* $('cidSwitch').removeAttr('checked'); */
 }
 
 
@@ -164,6 +178,7 @@ function deleteClass () {
 }
 
 function sendClassesToDelete() {
+	$(function(){ $('#cidSwitch').bootstrapToggle('off') });
 	console.log("*********sendClassesToDelete called**********");
 	$.ajax({
 		type:"POST",
@@ -204,6 +219,7 @@ function setURL(){
  * 
  * Posts Form */
 function addClass() {
+	$(function(){ $('#cidSwitch').bootstrapToggle('off') });
 	console.log("******addClass called******");
 	var form = $('#classForm').serialize();
 	var url = "/cheditor/api/addclass?"+form;
@@ -224,6 +240,7 @@ function addClass() {
 	});
 	
 	document.getElementById('classForm').reset();
+	/* $('cidSwitch').removeCSS */
 }
 
 
@@ -246,6 +263,7 @@ function sendToDelete(clazz) {
 $(document).ready(validateForm());
 
 function validateForm () {
+/* 	$(function(){ $('#cidSwitch').bootstrapToggle() }); */
 	requestTreeData();
  	$('#messageInfo').hide();
 	$(':input').keyup(function() {
