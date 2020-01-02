@@ -6,37 +6,33 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
-
-import app.CHEditor.domain.AbstractClazz;
 import app.CHEditor.domain.Clazz;
 import app.CHEditor.domain.Clazzes;
 import app.CHEditor.domain.SubClazzContainer;
 import app.CHEditor.domain.SuperClazzContainer;
-import app.CHEditor.formObjects.ClazzForm;
 import app.CHEditor.formObjects.DeleteForm;
 import app.CHEditor.formObjects.Response;
 import app.CHEditor.repositories.ClazzRepository;
-import app.CHEditor.validation.ClazzValidator;
 import app.CHEditor.validation.CreateClazzValidator;
 
+/**
+ * RestController Class used for ajax request responses.
+ * 
+ * @author Zachary Ishmael
+ *
+ */
 @RestController
 @RequestMapping({"cheditor/api/",""})
 public class CHEditorRest {
@@ -59,14 +55,14 @@ public class CHEditorRest {
 		Clazz c = new Clazz();
 		Response res = new Response();
 		String message = "";
-//		https://localhost:8090/addclass?name=People&cid=13&pid=12&abstract=true
+//		example url - https://localhost:8090/addclass?name=People&cid=13&pid=12&abstract=true
 		boolean cidCheck = false;
 		boolean pidCheck = false;
 		boolean nameCheck = false;
 		
 		Clazz check = null;
 		
-		//TODO Set pid if does not already exist
+		//Set pid if does not already exist
 		if (pid!=null) {
 			check = cRepo.findByCid(pid);
 			if (check == null) {
@@ -97,7 +93,7 @@ public class CHEditorRest {
 			_abstract = false;
 		}
 		
-		//TODO - EXCEPTION HANDLNIG FOR THIS METHOD
+		//EXCEPTION HANDLNIG FOR THIS METHOD
 		if (cidCheck && pidCheck) {
 			c = new Clazz(pid,cid,name,_abstract);
 			cRepo.save(c);
@@ -115,20 +111,15 @@ public class CHEditorRest {
 	}
 	
 	
-
-//	@Transactional
 	/**
-	 * Designed to handle Clazz and ClassForm objects
-	 * @param c
-	 * @param result
+	 * 
+	 * @param c - Clazz
+	 * @param result - BindingResult
 	 * @return
 	 */
-	
-//	<C extends AbstractClazz>
-
 	public Response create(Clazz c, BindingResult result) {
 		Response res = new Response();
-//		res.setMessage("Testing 123");
+		
 		/*Using DTO to allow even invalid fields to be stored
 		 * Otherwise number info is lost / not stored not complianted to entity annotation constraints.
 		 * */
@@ -358,24 +349,18 @@ public class CHEditorRest {
 			subs.setName(clazz.getName());
 		}
 		
-		//TODO - ELSE return SubClazzContainer of children to previous SubClazzContainer
-		
-		//TODO - CHECK IF HAS CHILD
+		// CHECK IF HAS CHILD
 		if (clazz != null) {
 			children = cRepo.findListByPid(clazz.getCid());
 			if (children != null) {
-			//TODO - CHECK IF Child had child
+				//Get subclasses of each file
 				for (Clazz child : children) {
 					subs.getChildren().add(getSub(child,displayCid));
 					System.out.println("Subclass:*****"+subs.getChildren().get(0).getName());
 				}
 			}
-			//TODO RETURN 
-//			return subs;
 		}
-
 		return subs;
-		
 	}
 	/**
 	 * Returns subclazzes for multiple clazzes.
@@ -389,22 +374,13 @@ public class CHEditorRest {
 		
 		List<SubClazzContainer> subsList = new ArrayList<SubClazzContainer>();
 		
-		//TODO - Performs getSub for each clazz
+		//Performs getSub for each clazz
 		if (clazzes != null) {
 			for (Clazz c : clazzes) {
 				subsList.add(getSub(c,displayCid));
 			}
  		}
-		
-		
-//		if (clazzes != null) {
-//			for (Clazz c : clazzes) {
-//				subsList.add(getSub(c));
-//			}
-//		}
-		
 		return subsList;
-		
 	}
 	
 	/**
@@ -421,21 +397,60 @@ public class CHEditorRest {
 		if (displayCid == null) {
 			displayCid = false;
 		}
-		//TODO - get all top level clazzes sub clazzes
+		//get all top level clazzes sub clazzes
 		if (clazzes != null) {
 			subsList = getMultipleSubs(clazzes,displayCid);
 		}
-		
 		return subsList;
 	}
 	
 	
-	@GetMapping("edit/{class}")
-	public Response edit (@RequestBody Clazz clazz) {
+	@GetMapping("editclass")
+	public Response edit (@RequestParam Integer cid, @RequestParam("name") String newName, @RequestParam("pid") Integer newPid) {
+		Response res = new Response();
+
+		Clazz clazz = null;
+		clazz = cRepo.findByCid(cid);
 		
+		if (clazz == null) {
+			res.setRet(false);
+			res.setMessage("cid "+cid+" does not exist");
+			return res;
+		}
 		
+//		SubClazzContainer subs = getSub(clazz, false);
+//		Clazz child = null;
+//		// finc child (if exists) where
+//		child = cRepo.findByCid(pid);
+
+		//Find children of this clazz if any - clazzes that have parent id as class to be edited
+//		List<Clazz> children = null;
+//		children = cRepo.findListByPid(cid);
+//		
+//		if (children != null) {
+//			for (Clazz child : children) {
+//				if (child.getCid() == newPid) {
+//					res.setRet(false);
+//					res.setMessage("cannot add child class cid"+newPid+" as parent class");
+//					return res;
+//				}
+//			}
+//		}
 		
-		return null;
+		//TODO - Change SubcLasses to JSON and check for pid within the JSON string
+		
+		if (newPid != null) {
+			
+			clazz.setPid(newPid);
+		}
+		
+		if (newName != null) {
+			clazz.setName(newName);
+		}
+		
+		cRepo.save(clazz);
+		
+		return res;
 	}
 	
 	/**isValidName***/
@@ -465,6 +480,7 @@ public class CHEditorRest {
 	}
 	
 	/**isValidPid***/
+//	Have each method also have a method for checking that other variables match the same item.
 	@GetMapping({"isValid/pid/{pid}","isValid/pid/"})
 	public Response isValidPid(@PathVariable(required = false) Integer pid) {
 		Response res = new Response();
@@ -509,6 +525,78 @@ public class CHEditorRest {
 	}
 	
 
+	/********For Validation Of Editing*******/
+	
+	/**isValidName***/
+	@GetMapping("isValid/name/edit/{name}")
+	public Response isValidNameEdit(@PathVariable String name) {
+		Response res = new Response();
+		res.setMessage(null);
+		
+		if (name.isBlank()) {
+			res.setRet(false);
+			res.setMessage("name is blank");
+			return res;
+		}
+		
+		Clazz c = null;
+		c = cRepo.findByName(name);
+		
+		if (c != null) {
+			res.setRet(false);
+			res.setMessage("class name "+name+" already exists.");
+			return res;
+		}
+		
+		res.setRet(true);
+		
+		return res;
+	}
+	
+	/**isValidPid***/
+	@GetMapping({"isValid/pid/edit/{pid}","isValid/pid/"})
+	public Response isValidPidEdit(@PathVariable(required = false) Integer pid) {
+		Response res = new Response();
+		
+		
+		if (pid != null) {
+			Clazz c = null;
+			c = cRepo.findByCid(pid);
+			if (c == null) {
+				res.setRet(false);
+				res.setMessage("pid "+pid+" is not found.");
+				return res;
+			}
+		}
+		
+		res.setRet(true);
+		
+		return res;
+	}
+	
+	/*isValidCid*/
+	@GetMapping("isValid/cid/edit/{cid}")
+	public Response isValidCidEdit(@PathVariable Integer cid) {
+		Response res = new Response();
+		res.setMessage(null);
+		if (cid == null) {
+			res.setRet(false);
+			res.setMessage("cid is blank");
+			return res;
+		}
+	
+		Clazz c = null;
+		c = cRepo.findByCid(cid);
+		
+		if (c == null) {
+			res.setRet(false);
+			res.setMessage("cid "+cid+" does not exist.");
+			return res;
+		}
+		res.setRet(true);
+		return res;
+	}
+	
 	
 	
 	

@@ -19,6 +19,11 @@ public class CHEditorController {
 		return "home";
 	}
 	
+	@GetMapping("edit")
+	public String editHierarchyPage() {
+		return "edit-hierarchy";
+	}
+	
 	
 	
 }

@@ -18,9 +18,8 @@
 <link rel="stylesheet" th:href="@{/jqtree/jqtree.css}"/>
 
 <!-- Toggle Switches  -->
-<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-
+<!-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script> -->
 <meta charset="UTF-8">
 <title>Edit Hierarchy</title>
 </head>
@@ -33,8 +32,8 @@
 			</div>
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" th:href="@{/}">Home</a></li>
-				<li class="nav-item"><a class="nav-link active text-info">View Hierarchy</a></li>
-				<li class="nav-item"><a class="nav-link" th:href="@{/}">Search Hierarchy</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/hierarchies}">View Hierarchy</a></li>
+				<li class="nav-item"><a class="nav-link active text-info">Edit Hierarchy</a></li>
 				<li class="nav-item"><a class="nav-link" th:href="@{/}">Search Hierarchy</a></li>
 			</ul>
 	</div>
@@ -42,32 +41,31 @@
 
 <div class="container text-center justify-content-center">
 
-<!-- <div class="custom-control custom-switch">
-	<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();">
+<div class="custom-control custom-switch">
+	<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();" checked>
 	<label class="custom-control-label" for="cidSwitch">Display Class IDs</label>
-</div> -->
+</div>
 
-<input type="checkbox" data-toggle="toggle" data-on="Show IDs" data-off="Hide IDs" data-height ="10" id="cidSwitch" onchange="showCid()">
+<!-- <input type="checkbox" data-toggle="toggle" data-on="Show IDs" data-off="Hide IDs" data-height ="10" id="cidSwitch" onchange="showCid()"> -->
 
 <div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
 <br><br><br>
 <p id="messageInfo" class="bg-info"></p>
 <form id="classForm" class="container col-sm-8" >
-	<label>Class Name</label>
-	<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
+	
 	<label>Class Id</label>
 	<input onfocus="setInput('cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
-	<label>Parent Id</label>
+	<hr>
+	<label>Set New Class Name</label>
+	<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
+	<label>Set New Parent Id</label>
 	<input onfocus="setInput('pid');" id="pid" type="text" class="form-control" name="pid" placeholder="ParentClass"></input>
 	<label>Abstract</label>
-	<input type="checkbox" class="form-control" name="abstract" value=true >
-	
-	
+	<input type="checkbox" class="form-control" name="abstract" value=true>
 </form>
-<button id="submit" class="btn btn-primary" onclick="addClass();"  value="Add Class">Add Class</button>
 
+<button id="submit" class="btn btn-primary" onclick="editClass();"  value="Edit Class">Edit Class</button>
 
-<button id="delete-btn" class="btn btn-primary" onclick="deleteClass();">Delete Class</button>
 </div>
 
 </body>
@@ -81,10 +79,10 @@ var toDelete;
 var toDeleteList = [];
 var switchState = 0;
 
-function editClasses () {
+/* function editClasses () {
 	$.ajax({
 		type: "GET",
-		url: "/cheditor/api/addclassJSON",
+		url: "/cheditor/api/editclassJSON",
 		data: $('#tree').tree('getTree'),
 		dataType: "json",
 		contentType: "application/json; charset=utf-8",
@@ -92,30 +90,18 @@ function editClasses () {
 			//if result returns true - put classes edited
 		}
 	});
-}
+} */
 
 function showCid() {
 	console.log('*********showCid called*********');
 	
-	/* if (document.getElementById('cidSwitch').checked) {
-	swithcURL ="/cheditor/api/browse/true";
-	/* switchState = 1; */
-	$.ajax({
-		type:"GET",
-		url:"/cheditor/api/browse/true",
-		success:getData
-		});
-	} else {
-	
-		requestTreeData();
-	/* 	switchState = 0; */
-	} */
+	requestTreeData();
 	
 }
 
 function requestTreeData() {
 	console.log("*******REQUESTING TREE DATA*****");
-	if ($('#cidSwitch').checked) {
+	if (document.getElementById('cidSwitch').checked) {
 	$.ajax({
 		type:"GET",
 		url:"/cheditor/api/browse/true",
@@ -149,15 +135,8 @@ function getTree(){
 		}
 		
 	});
-	/* $('cidSwitch').removeAttr('checked'); */
 }
 
-
-/* function getResponse(data) {
-	var str = JSON.stringify(data);
-	res = JSON.parse(str);
-	
-} */
 
 function getData(data) {
 	console.log("*******getData called****")
@@ -189,7 +168,7 @@ function deleteClass () {
 }
 
 function sendClassesToDelete() {
-	$(function(){ $('#cidSwitch').bootstrapToggle('off') });
+	
 	console.log("*********sendClassesToDelete called**********");
 	$.ajax({
 		type:"POST",
@@ -219,7 +198,7 @@ function setInput(id){
 	console.log("******setInput called******");
 	console.log("inputId = "+ id);
 	inputFieldId = "#"+id;
-	address = "/cheditor/api/isValid/"+id+"/";
+	address = "/cheditor/api/isValid/"+id+"/edit/";
 }
 
 function setURL(){
@@ -229,11 +208,11 @@ function setURL(){
 /*Called by submit button
  * 
  * Posts Form */
-function addClass() {
-	$(function(){ $('#cidSwitch').bootstrapToggle('off') });
-	console.log("******addClass called******");
+function editClass() {
+	/* $(function(){ $('#cidSwitch').bootstrapToggle('off') }); */
+	console.log("******editClass called******");
 	var form = $('#classForm').serialize();
-	var url = "/cheditor/api/addclass?"+form;
+	var url = "/cheditor/api/editclass?"+form;
 	$.ajax({
 		type:"GET",
 		url: url,
@@ -244,7 +223,7 @@ function addClass() {
 			var res = JSON.parse(str);
 			if (res.ret == 'true') {
 				$('#messageInfo').show();
-				$('#messageInfo').text("Added Class");
+				$('#messageInfo').text("Edited Class");
 			}
 			
 		}
@@ -258,16 +237,6 @@ function addClass() {
 
 
 
-function sendToDelete(clazz) {
-	$.ajax({
-		type:"POST",
-		url: "/cheditor/api/delete/"+clazz,
-		success: function (result) {
-			$('#messageInfo').text("Class deleted");
-			$('#messageInfo').show();
-		}
-	});
-}
 
 
 
