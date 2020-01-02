@@ -6,6 +6,8 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -22,6 +24,7 @@ import app.CHEditor.domain.Clazz;
 import app.CHEditor.domain.Clazzes;
 import app.CHEditor.domain.SubClazzContainer;
 import app.CHEditor.domain.SuperClazzContainer;
+import app.CHEditor.domain.User;
 import app.CHEditor.formObjects.DeleteForm;
 import app.CHEditor.formObjects.Response;
 import app.CHEditor.repositories.ClazzRepository;
@@ -362,6 +365,8 @@ public class CHEditorRest {
 		}
 		return subs;
 	}
+	
+	
 	/**
 	 * Returns subclazzes for multiple clazzes.
 	 * Note: SubClazzContainer contain information for just one 
@@ -393,17 +398,67 @@ public class CHEditorRest {
 		List<Clazz> clazzes = null;
 		List<SubClazzContainer> subsList = new ArrayList<SubClazzContainer>();
 		
+		//Finds all top level clazzes - top level clazzes have pid null
 		clazzes = cRepo.findListByPid(null);
 		if (displayCid == null) {
 			displayCid = false;
 		}
-		//get all top level clazzes sub clazzes
+		//get sub clazzes of all top level clazzes
 		if (clazzes != null) {
 			subsList = getMultipleSubs(clazzes,displayCid);
 		}
 		return subsList;
 	}
 	
+	
+	@GetMapping({"browseUserClasses"})
+	public List<SubClazzContainer> browseUserClasses () {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String username = (String) auth.getPrincipal();
+		
+		//TODO getUser from UserRepository
+		
+		//TODO getUser Class list 
+		
+		//TODO Get top level classes
+		
+		//Convert getSubClasses of Top level classes
+		
+		
+		return null;
+	}
+	
+	
+	/**
+	 * Returns the subclazzes of one given clazz.
+	 * @param clazz - class you want subclazzes of 
+	 * @return SubClazzContainer - with all subclazzes
+	 */
+	public SubClazzContainer getSubUser(Clazz clazz, Boolean displayCid) {
+		
+		List<Clazz> children = null;
+		SubClazzContainer subs = new SubClazzContainer();
+		subs.setCid(clazz.getCid());
+		if (displayCid) {
+			String name = clazz.getName()+" - id:"+clazz.getCid();
+			subs.setName(name);
+		} else {
+			subs.setName(clazz.getName());
+		}
+		
+		// CHECK IF HAS CHILD
+		if (clazz != null) {
+			children = cRepo.findListByPid(clazz.getCid());
+			if (children != null) {
+				//Get subclasses of each file
+				for (Clazz child : children) {
+					subs.getChildren().add(getSub(child,displayCid));
+					System.out.println("Subclass:*****"+subs.getChildren().get(0).getName());
+				}
+			}
+		}
+		return subs;
+	}
 	
 	@GetMapping("editclass")
 	public Response edit (@RequestParam Integer cid, @RequestParam("name") String newName, @RequestParam("pid") Integer newPid) {

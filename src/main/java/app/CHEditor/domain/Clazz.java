@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -42,6 +43,8 @@ public class Clazz extends AbstractClazz {
 	@JsonProperty("abstract")
 	Boolean _abstract;
 	
+	@ManyToOne(optional = false)
+	User user;
 	/*Required by 	Spring entity management*/
 	public Clazz () {
 		this._abstract = false;
