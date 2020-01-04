@@ -411,54 +411,7 @@ public class CHEditorRest {
 	}
 	
 	
-	@GetMapping({"browseUserClasses"})
-	public List<SubClazzContainer> browseUserClasses () {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String username = (String) auth.getPrincipal();
-		
-		//TODO getUser from UserRepository
-		
-		//TODO getUser Class list 
-		
-		//TODO Get top level classes
-		
-		//Convert getSubClasses of Top level classes
-		
-		
-		return null;
-	}
 	
-	
-	/**
-	 * Returns the subclazzes of one given clazz.
-	 * @param clazz - class you want subclazzes of 
-	 * @return SubClazzContainer - with all subclazzes
-	 */
-	public SubClazzContainer getSubUser(Clazz clazz, Boolean displayCid) {
-		
-		List<Clazz> children = null;
-		SubClazzContainer subs = new SubClazzContainer();
-		subs.setCid(clazz.getCid());
-		if (displayCid) {
-			String name = clazz.getName()+" - id:"+clazz.getCid();
-			subs.setName(name);
-		} else {
-			subs.setName(clazz.getName());
-		}
-		
-		// CHECK IF HAS CHILD
-		if (clazz != null) {
-			children = cRepo.findListByPid(clazz.getCid());
-			if (children != null) {
-				//Get subclasses of each file
-				for (Clazz child : children) {
-					subs.getChildren().add(getSub(child,displayCid));
-					System.out.println("Subclass:*****"+subs.getChildren().get(0).getName());
-				}
-			}
-		}
-		return subs;
-	}
 	
 	@GetMapping("editclass")
 	public Response edit (@RequestParam Integer cid, @RequestParam("name") String newName, @RequestParam("pid") Integer newPid) {
@@ -473,24 +426,6 @@ public class CHEditorRest {
 			return res;
 		}
 		
-//		SubClazzContainer subs = getSub(clazz, false);
-//		Clazz child = null;
-//		// finc child (if exists) where
-//		child = cRepo.findByCid(pid);
-
-		//Find children of this clazz if any - clazzes that have parent id as class to be edited
-//		List<Clazz> children = null;
-//		children = cRepo.findListByPid(cid);
-//		
-//		if (children != null) {
-//			for (Clazz child : children) {
-//				if (child.getCid() == newPid) {
-//					res.setRet(false);
-//					res.setMessage("cannot add child class cid"+newPid+" as parent class");
-//					return res;
-//				}
-//			}
-//		}
 		
 		//TODO - Change SubcLasses to JSON and check for pid within the JSON string
 		

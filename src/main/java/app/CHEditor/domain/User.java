@@ -9,14 +9,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+/**
+ * Entity class for Users.
+ * Users are granted authority to access the
+ * CHEditor visual hierarchy web application.
+ * @author Zachary Ishmael
+ *
+ */
 @Entity
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	
-	@OneToMany(mappedBy = "id")
-	List<Clazz> clazzes;
+	String role = "User";
+
 
 	
 	/**
@@ -34,17 +41,17 @@ public class User {
 	}
 
 	/**
-	 * @return the clazzes
+	 * @return the role
 	 */
-	public List<Clazz> getClazzes() {
-		return clazzes;
+	public String getRole() {
+		return role;
 	}
 
 	/**
-	 * @param clazzes the clazzes to set
+	 * @param role the role to set
 	 */
-	public void setClazzes(List<Clazz> clazzes) {
-		this.clazzes = clazzes;
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	

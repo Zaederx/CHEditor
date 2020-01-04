@@ -16,7 +16,9 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import app.CHEditor.formObjects.ClazzForm;
 
 /**
- * Entity Class used to 
+ * Entity class used to represented classes.
+ * Named clazz to avoid keyword conflicts.
+ * 
  * @author Zachary Ishmael
  *
  */
@@ -43,8 +45,7 @@ public class Clazz extends AbstractClazz {
 	@JsonProperty("abstract")
 	Boolean _abstract;
 	
-	@ManyToOne(optional = false)
-	User user;
+
 	/*Required by 	Spring entity management*/
 	public Clazz () {
 		this._abstract = false;
