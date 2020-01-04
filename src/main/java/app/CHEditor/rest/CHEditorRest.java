@@ -6,8 +6,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -24,7 +22,6 @@ import app.CHEditor.domain.Clazz;
 import app.CHEditor.domain.Clazzes;
 import app.CHEditor.domain.SubClazzContainer;
 import app.CHEditor.domain.SuperClazzContainer;
-import app.CHEditor.domain.User;
 import app.CHEditor.formObjects.DeleteForm;
 import app.CHEditor.formObjects.Response;
 import app.CHEditor.repositories.ClazzRepository;
@@ -59,25 +56,28 @@ public class CHEditorRest {
 		Response res = new Response();
 		String message = "";
 //		example url - https://localhost:8090/addclass?name=People&cid=13&pid=12&abstract=true
+		
+		//Used to make sure variables are not null & do not exist in Database.
 		boolean cidCheck = false;
 		boolean pidCheck = false;
 		boolean nameCheck = false;
 		
 		Clazz check = null;
 		
-		//Set pid if does not already exist
-		if (pid!=null) {
-			check = cRepo.findByCid(pid);
+		//Set name if does not already exist.
+		if (name != null)  {
+			check = cRepo.findByName(name);
 			if (check == null) {
-				message += "pid "+pid+" not found.";
+				message += "class '"+name+"' name already exists.";
 				System.out.println("message:"+message);
+				
+				res.setRet(false);
+				res.setMessage(message);
+				return res;
 			} else {
-			pidCheck = true;
+				nameCheck = true;
 			}
-		} else {
-			pidCheck = true;
 		}
-		
 		
 		//Set CID IF Does not already exist
 		if (cid != null) {
@@ -86,9 +86,31 @@ public class CHEditorRest {
 			if (check != null) {
 				message += "cid "+cid+" already exists.";
 				System.out.println("message:"+message);
+				
+				res.setRet(false);
+				res.setMessage(message);
+				return res;
 			} else {
 				cidCheck = true;
 			}
+		}
+		
+		//Set pid if does not already exist
+		if (pid!=null) {
+			check = null;
+			check = cRepo.findByCid(pid);
+			if (check == null) {
+				message += "pid "+pid+" not found.";
+				System.out.println("message:"+message);
+				
+				res.setRet(false);
+				res.setMessage(message);
+				return res;
+			} else {
+			pidCheck = true;
+			}
+		} else {
+			pidCheck = true;
 		}
 		
 		//Abstract
@@ -97,7 +119,7 @@ public class CHEditorRest {
 		}
 		
 		//EXCEPTION HANDLNIG FOR THIS METHOD
-		if (cidCheck && pidCheck) {
+		if (nameCheck && cidCheck && pidCheck) {
 			c = new Clazz(pid,cid,name,_abstract);
 			cRepo.save(c);
 			System.out.println("*******Class Added ********");
@@ -133,42 +155,26 @@ public class CHEditorRest {
 		String messageCid = "cid '"+c.getCid()+"' already exists. ";
 		String messageName = "name '"+c.getName()+"' already exists. ";
 		
-		if (c.getName() == null) {
-			message += "name is empty.";
-		}
 		
-		if (c.getCid() == null) {
-			message += "cid is empty.";
+		if (result.hasFieldErrors("name")) {
+			res.setRet(false);
+			res.setMessage(messageName);
+			return res;
 		}
-		
-		if (c.getPid () == null) {
-			message += "pid is empty";
-		}
-		
 		
 		if (result.hasFieldErrors("pid")) {
 			res.setRet(false);
-			message += messagePid;
-			
-	
+			res.setMessage(messagePid);
 		}
 		
 		if (result.hasFieldErrors("cid")) {
 			res.setRet(false);
-			message += messageCid;
-		
-		}
-		
-		if (result.hasFieldErrors("name")) {
-			res.setRet(false);
-			message += messageName;
-		}
-		
-		if (result.hasErrors()) {
-			res.setRet(false);
-			res.setMessage(message);
+			res.setMessage(messageCid);
 			return res;
+		
 		}
+		
+		
 
 		System.out.println("Clazz == ClazzForm");
 		
@@ -183,6 +189,7 @@ public class CHEditorRest {
 			return res;
 		}
 		System.out.println(res.getMessage());
+		res.setRet(true);
 		return res;
 	}
 
