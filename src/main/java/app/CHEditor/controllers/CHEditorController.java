@@ -24,6 +24,10 @@ public class CHEditorController {
 		return "edit-hierarchy";
 	}
 	
+	@GetMapping("search")
+	public String search() {
+		return "search-hierarchies";
+	}
 	
 	
 }

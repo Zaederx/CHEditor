@@ -19,32 +19,35 @@
 
 <!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- Toggle Switches  -->
-<!-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script> -->
 
 <meta charset="UTF-8">
-<title>View Hierarchy</title>
+<title>Search Hierarchy</title>
 <style>
 button.btn-round {
-border-radius : 50%;
-padding: 0;
-margin: 0;
+	border-radius : 50%;
+	padding: 0;
+	margin: 0;
 }
+/* ul.center-left{
+	display:;
+	margin:0 0;
+	padding:0;
+}
+ */
 </style>
 </head>
 <body>
 <div class="jumbotron text-center">
-<h1>CHEditor View</h1>
+<h1>CHEditor Search</h1>
 <div class="navbar navbar-expand-sm bg-dark">
 			<div class="navbar-header">
 				<a class="navbar-brand text-light" th:href="@{/}">CHEditor App</a>
 			</div>
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/}">Home</a></li>
-				<li class="nav-item"><a class="nav-link active text-info">View Hierarchy</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/hierarchies}">View Hierarchy</a></li>
 				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/edit}">Edit Hierarchy</a></li>
-				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/search}">Search Hierarchy</a></li>
+				<li class="nav-item"><a class="nav-link active text-info" th:href="@{cheditor/search}">Search Hierarchy</a></li>
 			</ul>
 	</div>
 </div>
@@ -57,7 +60,7 @@ margin: 0;
 
  <!-- Accordian Group -->
 <div id="accordion">
-<!-- Card -->
+<!-- Card 1 -->
    <div class="card">
     <div class="card-header" id="instructionsHeading">
       <h5 class="mb-0">
@@ -67,53 +70,89 @@ margin: 0;
      </h5>
     </div>
 	<!-- Body -->
-    <div id="instructionsBody" class="collapse" aria-labelledby="instructionsHeading" data-parent="#accordion">
+    <div id="instructionsBody" class="collapse show" aria-labelledby="instructionsHeading" data-parent="#accordion">
       <div class="card-body">
-		<ul>
-	      	<li>Here you can add and delete classes.</li>
-			<li>Classes can be added by entering information and selecting add.</li>
-			<li>Classes can be deleted by clicking on a class from the hierarchy, then clicking delete.</li>
-			<li>Id's should not exceed 999,999,999.</li>
-			<li>Note: Only classes that do not have children classes, can be selected for deletion.</li>
+      	<ul class="text-left" >
+	      	<li>Here you can search classes by name or by id.</li>
+			<li>Class information will be displayed below if valid name of id is submitted.</li>
 		</ul>
       </div>
     </div>
   </div>
   
+  <!-- Card 2 -->
+  
+  <div class="card">
+    <div class="card-header" id="searchName">
+      <h5 class="mb-0">
+        <button class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchN" aria-expanded="false" aria-controls="collapseTwo">
+          Search Class By Name
+        </button>
+     </h5>
+    </div>
+	<!-- Body -->
+    <div id="searchN" class="collapse" aria-labelledby="searchName" data-parent="#accordion">
+      <div class="card-body">
+      
+     <form id="classForm" class="form-group container col-sm-8" >
+		<label>Class Name</label>
+		<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
+	
+	</form>
+	<br>
+	<button id="submit" class="btn btn-primary" onclick="searchClass();"  value="Search Class">Search Class</button>
+      	
+      	
+      </div>
+    </div>
+  </div>
+  
+  
+   <!-- Card 3 -->
+  
+  <div class="card">
+    <div class="card-header" id="searchById">
+      <h5 class="mb-0">
+        <button class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchId" aria-expanded="false" aria-controls="collapseThree">
+          Search Class By Id
+        </button>
+     </h5>
+    </div>
+	<!-- Body -->
+    <div id="searchId" class="collapse" aria-labelledby="searchById" data-parent="#accordion">
+      <div class="card-body">
+      
+    <form id="classForm" class="form-group container col-sm-8" >
+		<label>Class Id</label>
+		<input onfocus="setInput('cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
+	</form>
+	<br>
+<button id="submit" class="btn btn-primary" onclick="searchClass();"  value="Search Class">Search Class</button>
+      
+      </div>
+    </div>
+  </div>
+  
 </div>
+<p id="messageInfo" class="bg-info"></p>
+<!-- Toggle Switch For Display Id -->
 <br><hr>
 <div class="custom-control custom-switch">
 	<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();">
 	<label class="custom-control-label" for="cidSwitch">Display Class IDs</label>
 </div>
 
-<!-- <input type="checkbox" data-toggle="toggle" data-on="Show IDs" data-off="Hide IDs" data-height ="10" id="cidSwitch" onchange="showCid()"> -->
+
 
 <div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
 <br><br><br>
-<p id="messageInfo" class="bg-info"></p>
-<form id="classForm" class="container col-sm-8" >
-	<label>Class Name</label>
-	<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
-	<label>Class Id</label>
-	<input onfocus="setInput('cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
-	<label>Parent Id</label>
-	<input onfocus="setInput('pid');" id="pid" type="text" class="form-control" name="pid" placeholder="ParentClass"></input>
-	<label>Abstract</label>
-	<input type="checkbox" class="form-control" name="abstract" value=true >
-	
-	
-</form>
-<button id="submit" class="btn btn-primary" onclick="addClass();"  value="Add Class">Add Class</button>
 
-
-<button id="delete-btn" class="btn btn-primary" onclick="deleteClass();">Delete Class</button>
 </div>
 
 </body>
 <script>
 var inputFieldId = "#name";
-var switchURL = "/cheditor/api/browse";
+var switchURL = "/cheditor/api/search";
 var inputURL = "";
 var address = "";
 var response = "";//class data retireved from server
@@ -121,18 +160,7 @@ var toDelete;
 var toDeleteList = [];
 var switchState = 0;
 
-function editClasses () {
-	$.ajax({
-		type: "GET",
-		url: "/cheditor/api/addclassJSON",
-		data: $('#tree').tree('getTree'),
-		dataType: "json",
-		contentType: "application/json; charset=utf-8",
-		success: function (result) {
-			//if result returns true - put classes edited
-		}
-	});
-}
+
 
 function showCid() {
 	console.log('*********showCid called*********');
@@ -194,6 +222,8 @@ function getData(data) {
 	getTree();
 }
 
+/* Replaces cid and superclass with text id and children
+in order to match reqiured jqTree data structure */
 function parseFieldsToJQTree(data) {
 	console.log("********parseFieldsToJQTree called********");
 	var d = data.replace(/cid/g,'id');
@@ -203,48 +233,14 @@ function parseFieldsToJQTree(data) {
 	return d;
 }
 
-function deleteClass () {
-	console.log('**********delete Class called*********')
-	nodes = $('#tree').tree('getState');
 
-	toDeleteList = nodes.selected_node;
-	
-	console.log(toDeleteList);
-	sendClassesToDelete();
-}
 
-function sendClassesToDelete() {
-/* 	$(function(){ $('#cidSwitch').bootstrapToggle('off') }); */
-	console.log("*********sendClassesToDelete called**********");
-	$.ajax({
-		type:"POST",
-		url: "/cheditor/api/deleteclassesJSON",
-		data: JSON.stringify({"toDeleteList":toDeleteList}),
-		dataType: "json",
-	 	contentType: "application/json; charset=utf-8;",
-		success: function (result) {
-			var str = JSON.stringify(result);
-			var res = JSON.parse(str);
-			var ret = res.ret;
-			console.log("ret:"+ret);
-			if (ret == 'true') {
-				$('#messageInfo').text("Class deleted");
-				$('#messageInfo').show();
-			} else {
-				$('#messageInfo').text(res.message);
-				$('#messageInfo').show();
-			}
-			$('#tree').tree('destroy');
-			requestTreeData();
-		}
-	});
-}
 
 function setInput(id){
 	console.log("******setInput called******");
 	console.log("inputId = "+ id);
 	inputFieldId = "#"+id;
-	address = "/cheditor/api/isValid/"+id+"/";
+	address = "/cheditor/api/isValid/search/"+id+"/";
 }
 
 function setURL(){
@@ -254,11 +250,11 @@ function setURL(){
 /*Called by submit button
  * 
  * Posts Form */
-function addClass() {
+function searchClass() {
 
-	console.log("******addClass called******");
+	console.log("******searchClass called******");
 	var form = $('#classForm').serialize();
-	var url = "/cheditor/api/addclass?"+form;
+	var url = "/cheditor/api/search?"+form;
 	$.ajax({
 		type:"GET",
 		url: url,
@@ -280,26 +276,11 @@ function addClass() {
 
 
 
-
-
-function sendToDelete(clazz) {
-	$.ajax({
-		type:"POST",
-		url: "/cheditor/api/delete/"+clazz,
-		success: function (result) {
-			$('#messageInfo').text("Class deleted");
-			$('#messageInfo').show();
-		}
-	});
-}
-
-
-
 $(document).ready(validateForm());
 
 function validateForm () {
 /* 	$(function(){ $('#cidSwitch').bootstrapToggle() }); */
-	requestTreeData();
+/* 	requestTreeData(); */
  	$('#messageInfo').hide();
 	$(':input').keyup(function() {
 		console.log("******validateForm called*******");

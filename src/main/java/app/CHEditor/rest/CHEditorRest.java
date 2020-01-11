@@ -67,7 +67,7 @@ public class CHEditorRest {
 		//Set name if does not already exist.
 		if (name != null)  {
 			check = cRepo.findByName(name);
-			if (check == null) {
+			if (check != null) {
 				message += "class '"+name+"' name already exists.";
 				System.out.println("message:"+message);
 				
@@ -477,7 +477,6 @@ public class CHEditorRest {
 	}
 	
 	/**isValidPid***/
-//	Have each method also have a method for checking that other variables match the same item.
 	@GetMapping({"isValid/pid/{pid}","isValid/pid/"})
 	public Response isValidPid(@PathVariable(required = false) Integer pid) {
 		Response res = new Response();
@@ -530,7 +529,7 @@ public class CHEditorRest {
 		Response res = new Response();
 		res.setMessage(null);
 		
-		if (name.isBlank()) {
+		if (name.isBlank() || name.isEmpty()) {
 			res.setRet(false);
 			res.setMessage("name is blank");
 			return res;
@@ -587,7 +586,7 @@ public class CHEditorRest {
 		
 		if (c == null) {
 			res.setRet(false);
-			res.setMessage("cid "+cid+" does not exist.");
+			res.setMessage("cid '"+cid+"' does not exist.");
 			return res;
 		}
 		res.setRet(true);
@@ -595,6 +594,84 @@ public class CHEditorRest {
 	}
 	
 	
+	@GetMapping("search")
+	public Object search(@RequestParam(required = false) Integer cid, @RequestParam(required = false, name = "name") String className) {
+		Response res = new Response();
+		Clazz c = null;
+		if (cid != null) {
+			c = cRepo.findByCid(cid);
+			if (c != null) {
+				return getSub(c, false);
+			}else {
+				res.setRet(false);
+				res.setMessage("class cid '"+cid+"' could not be found");
+			}
+		} 
+		else if (className != null) {
+			c = cRepo.findByName(className);
+			if (c != null) {
+				res.setRet(true);
+			} else {
+				res.setRet(false);
+				res.setMessage("class name '"+className+"' could not be found");
+			}
+		}
+		else {
+			res.setRet(false);
+			res.setMessage("class could not be found");
+		}
+		return res;
+	}
 	
+	/*Is valid search */
+	/*isValidCid*/
+	@GetMapping("isValid/search/cid/{cid}")
+	public Response isValidCidSearch(@PathVariable Integer cid) {
+		Response res = new Response();
+		res.setMessage(null);
+		if (cid == null) {
+			res.setRet(false);
+			res.setMessage("cid is blank");
+			return res;
+		}
+	
+		Clazz c = null;
+		c = cRepo.findByCid(cid);
+		
+		if (c == null) {
+			res.setRet(false);
+			res.setMessage("cid '"+cid+"' does not exist.");
+			return res;
+		}
+		res.setRet(true);
+		return res;
+	}
+	
+
+	/**isValidName***/
+	@GetMapping("isValid/search/name/{name}")
+	public Response isValidNameSearch(@PathVariable String name) {
+		Response res = new Response();
+		res.setMessage(null);
+		
+		if (name.isBlank() || name.isEmpty()) {
+			res.setRet(false);
+			res.setMessage("name is blank");
+			return res;
+		}
+		
+		Clazz c = null;
+		c = cRepo.findByName(name);
+		
+		if (c == null) {
+			res.setRet(false);
+			res.setMessage("class name '"+name+"' does not exists.");
+			return res;
+		}
+		
+		res.setRet(true);
+		
+		return res;
+	}
 	
 }
