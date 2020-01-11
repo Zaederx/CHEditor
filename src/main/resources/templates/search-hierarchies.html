@@ -94,9 +94,9 @@ button.btn-round {
     <div id="searchN" class="collapse" aria-labelledby="searchName" data-parent="#accordion">
       <div class="card-body">
       
-     <form id="classForm" class="form-group container col-sm-8" >
+     <form id="form-name" class="form-group container col-sm-8" >
 		<label>Class Name</label>
-		<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
+		<input onfocus="setInput('name'); setFormId('form-name');'" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
 	
 	</form>
 	<br>
@@ -122,9 +122,9 @@ button.btn-round {
     <div id="searchId" class="collapse" aria-labelledby="searchById" data-parent="#accordion">
       <div class="card-body">
       
-    <form id="classForm" class="form-group container col-sm-8" >
+    <form id="form-cid" class="form-group container col-sm-8" >
 		<label>Class Id</label>
-		<input onfocus="setInput('cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
+		<input onfocus="setInput('cid'); setFormId('form-cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
 	</form>
 	<br>
 <button id="submit" class="btn btn-primary" onclick="searchClass();"  value="Search Class">Search Class</button>
@@ -159,13 +159,19 @@ var response = "";//class data retireved from server
 var toDelete;
 var toDeleteList = [];
 var switchState = 0;
-
+var formId = "";
 
 
 function showCid() {
 	console.log('*********showCid called*********');
 	requestTreeData();
 	
+}
+
+function setFormId (id) {
+	console.log("********* setFormId called **********");
+	console.log('formId = '+ id );
+	formId = id;
 }
 
 function requestTreeData() {
@@ -253,14 +259,14 @@ function setURL(){
 function searchClass() {
 
 	console.log("******searchClass called******");
-	var form = $('#classForm').serialize();
+	var form = $('#'+formId).serialize();
 	var url = "/cheditor/api/search?"+form;
 	$.ajax({
 		type:"GET",
 		url: url,
 		success: function(data) {
 			$('#tree').tree('destroy');
-			requestTreeData();
+			/* requestTreeData(); */
 			var str = JSON.stringify(data);
 			var res = JSON.parse(str);
 			if (res.ret == 'true') {
@@ -271,8 +277,10 @@ function searchClass() {
 		}
 	});
 	
-	document.getElementById('classForm').reset();
+	document.getElementById(formId).reset();
 }
+
+
 
 
 

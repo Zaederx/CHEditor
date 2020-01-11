@@ -616,10 +616,10 @@ public class CHEditorRest {
 				res.setMessage("class name '"+className+"' could not be found");
 			}
 		}
-		else {
-			res.setRet(false);
-			res.setMessage("class could not be found");
-		}
+//		else {
+//			res.setRet(false);
+//			res.setMessage("class could not be found");
+//		}
 		return res;
 	}
 	
