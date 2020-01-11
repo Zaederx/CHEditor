@@ -47,7 +47,7 @@ button.btn-round {
 				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/}">Home</a></li>
 				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/hierarchies}">View Hierarchy</a></li>
 				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/edit}">Edit Hierarchy</a></li>
-				<li class="nav-item"><a class="nav-link active text-info" th:href="@{cheditor/search}">Search Hierarchy</a></li>
+				<li class="nav-item"><a class="nav-link active text-info">Search Hierarchy</a></li>
 			</ul>
 	</div>
 </div>
@@ -57,6 +57,7 @@ button.btn-round {
 <div class="col-sm-4">
 
 </div>
+
 
  <!-- Accordian Group -->
 <div id="accordion">
@@ -85,22 +86,22 @@ button.btn-round {
   <div class="card">
     <div class="card-header" id="searchName">
       <h5 class="mb-0">
-        <button class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchN" aria-expanded="false" aria-controls="collapseTwo">
+        <button onclick="setBtn('sub-one');" class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchN" aria-expanded="false" aria-controls="collapseTwo">
           Search Class By Name
         </button>
      </h5>
     </div>
 	<!-- Body -->
-    <div id="searchN" class="collapse" aria-labelledby="searchName" data-parent="#accordion">
+    <div  id="searchN" class="collapse" aria-labelledby="searchName" data-parent="#accordion" >
       <div class="card-body">
       
      <form id="form-name" class="form-group container col-sm-8" >
 		<label>Class Name</label>
-		<input onfocus="setInput('name'); setFormId('form-name');'" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
+		<input onfocus="setInput('name'); setFormId('form-name');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
 	
 	</form>
 	<br>
-	<button id="submit" class="btn btn-primary" onclick="searchClass();"  value="Search Class">Search Class</button>
+	<button id="sub-two" class="btn btn-primary" onclick="searchClass();"  value="Search Class">Search Class</button>
       	
       	
       </div>
@@ -113,7 +114,7 @@ button.btn-round {
   <div class="card">
     <div class="card-header" id="searchById">
       <h5 class="mb-0">
-        <button class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchId" aria-expanded="false" aria-controls="collapseThree">
+        <button onclick="setBtn('sub-two');" class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchId" aria-expanded="false" aria-controls="collapseThree">
           Search Class By Id
         </button>
      </h5>
@@ -127,7 +128,7 @@ button.btn-round {
 		<input onfocus="setInput('cid'); setFormId('form-cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
 	</form>
 	<br>
-<button id="submit" class="btn btn-primary" onclick="searchClass();"  value="Search Class">Search Class</button>
+<button id="sub-two" class="btn btn-primary" onclick="searchClass();"  value="Search Class">Search Class</button>
       
       </div>
     </div>
@@ -142,9 +143,8 @@ button.btn-round {
 	<label class="custom-control-label" for="cidSwitch">Display Class IDs</label>
 </div>
 
-
-
 <div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
+
 <br><br><br>
 
 </div>
@@ -152,20 +152,58 @@ button.btn-round {
 </body>
 <script>
 var inputFieldId = "#name";
-var switchURL = "/cheditor/api/search";
+
 var inputURL = "";
 var address = "";
-var response = "";//class data retireved from server
+var response = "";//class data retrieved from server
 var toDelete;
 var toDeleteList = [];
 var switchState = 0;
 var formId = "";
+var subBtn = ""; //submit Btn selection
 
+
+function requestTreeData() {
+	console.log("*******REQUESTING TREE DATA*****");
+	
+	$.ajax({
+		type:"GET",
+		url:"/cheditor/api/browse/true",
+		success:getData
+		});
+	
+}
 
 function showCid() {
 	console.log('*********showCid called*********');
+	requestTreeDataUrl();
+}
+
+function requestTreeDataUrl(url) {
+	console.log("*******REQUESTING TREE DATA*****");
+	if (document.getElementById('cidSwitch').checked) {
+		$.ajax({
+			type:"GET",
+			url:url+'&d=true',
+			success:getData
+			});
+	} else {
+		$.ajax({
+			type:"GET",
+			url:url+'&d=false',
+			success:getData
+			});
+	}
+	
+}
+/* function showCid() {
+	console.log('*********showCid called*********');
 	requestTreeData();
 	
+} */
+function setBtn (btnId) {
+	console.log("********* setBtn called **********");
+	subBtn = btnId;
 }
 
 function setFormId (id) {
@@ -174,50 +212,17 @@ function setFormId (id) {
 	formId = id;
 }
 
-function requestTreeData() {
+/* function requestTreeData() {
 	console.log("*******REQUESTING TREE DATA*****");
 	if (document.getElementById('cidSwitch').checked) {
-	$.ajax({
-		type:"GET",
-		url:"/cheditor/api/browse/true",
-		success:getData
-		});
-	} else {
-		$.ajax({
-			type:"GET",
-			url:"/cheditor/api/browse",
-			success:getData
-			});
-	}
 	
-}
-
-function getTree(){
-	console.log("******getTree() called******");
-	$('#tree').tree('destroy');
-	$('#tree').tree({
-		data:response,
-		autoOpen: true,
-		dragAndDrop:true,
-		saveState:true,
-		selectable: true,
-	 	onCanSelectNode: function (node) {
-			if (node.children.length == 0){
-				return true;
-			}
-			return false;
-		}
-		
-	});
-}
-
-
-/* function getResponse(data) {
-	var str = JSON.stringify(data);
-	res = JSON.parse(str);
+	}
 	
 } */
 
+/*Calls method necessary to prepare data
+ * for use with jqTree, in order to 
+ crate hierarchy*/
 function getData(data) {
 	console.log("*******getData called****")
  	var str = JSON.stringify(data);
@@ -238,6 +243,33 @@ function parseFieldsToJQTree(data) {
 	d = JSON.parse(d);
 	return d;
 }
+
+/*Creates jqTree*/
+function getTree(){
+	console.log("******getTree() called******");
+	 $('#tree').tree('destroy');
+	$('#tree').tree({
+		data:response,
+		autoOpen: true,
+		dragAndDrop:true,
+		saveState:false,
+		selectable: true,
+	 	onCanSelectNode: function (node) {
+			if (node.children.length == 0){
+				return true;
+			}
+			return false;
+		}
+		
+	});
+}
+
+
+
+
+
+
+
 
 
 
@@ -265,13 +297,16 @@ function searchClass() {
 		type:"GET",
 		url: url,
 		success: function(data) {
-			$('#tree').tree('destroy');
+			/* $('#tree').tree('destroy'); */
 			/* requestTreeData(); */
 			var str = JSON.stringify(data);
 			var res = JSON.parse(str);
-			if (res.ret == 'true') {
+			if (res.ret == 'false') {
 				$('#messageInfo').show();
-				$('#messageInfo').text("Added Class");
+				$('#messageInfo').text(res.message);
+			} else {
+				console.log("*****search class else statement called*****");
+				requestTreeDataUrl(url);
 			}
 			
 		}
@@ -287,8 +322,7 @@ function searchClass() {
 $(document).ready(validateForm());
 
 function validateForm () {
-/* 	$(function(){ $('#cidSwitch').bootstrapToggle() }); */
-/* 	requestTreeData(); */
+	requestTreeData();
  	$('#messageInfo').hide();
 	$(':input').keyup(function() {
 		console.log("******validateForm called*******");
@@ -302,15 +336,15 @@ function validateForm () {
 				var res = JSON.parse(str);
 				var ret = res.ret;
 				if (ret == 'false') {
-					$('#submit').attr("disabled", 'true');
-					$('#submit').removeClass("btn-primary");
-					$('#submit').addClass("btn-secondary");
+					$(subBtn).attr("disabled", 'true');
+					$(subBtn).removeClass("btn-primary");
+					$(subBtn).addClass("btn-secondary");
 					$('#messageInfo').text(res.message);
 					$('#messageInfo').show();
 				} else {
-					$('#submit').removeAttr("disabled");
-					$('#submit').removeClass("btn-secondary");
-					$('#submit').addClass("btn-primary");
+					$(subBtn).removeAttr("disabled");
+					$(subBtn).removeClass("btn-secondary");
+					$(subBtn).addClass("btn-primary");
 				 	$('#messageInfo').text("");
 					$('#messageInfo').hide();
 				}

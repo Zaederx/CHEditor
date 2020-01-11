@@ -595,13 +595,15 @@ public class CHEditorRest {
 	
 	
 	@GetMapping("search")
-	public Object search(@RequestParam(required = false) Integer cid, @RequestParam(required = false, name = "name") String className) {
+	public Object search(@RequestParam(required = false) Integer cid, @RequestParam(required = false, name = "name") String className, @RequestParam(required = false, defaultValue = "false") Boolean displayId) {
 		Response res = new Response();
 		Clazz c = null;
 		if (cid != null) {
 			c = cRepo.findByCid(cid);
 			if (c != null) {
-				return getSub(c, false);
+				List<SubClazzContainer> subs = new ArrayList<SubClazzContainer>();
+				subs.add(getSub(c,displayId));
+				return subs;
 			}else {
 				res.setRet(false);
 				res.setMessage("class cid '"+cid+"' could not be found");
@@ -610,16 +612,18 @@ public class CHEditorRest {
 		else if (className != null) {
 			c = cRepo.findByName(className);
 			if (c != null) {
-				res.setRet(true);
+				List<SubClazzContainer> subs = new ArrayList<SubClazzContainer>();
+				subs.add(getSub(c,displayId));
+				return subs;
 			} else {
 				res.setRet(false);
 				res.setMessage("class name '"+className+"' could not be found");
 			}
 		}
-//		else {
-//			res.setRet(false);
-//			res.setMessage("class could not be found");
-//		}
+		else if (className == null && cid == null) {
+			res.setRet(false);
+			res.setMessage("class could not be found");
+		}
 		return res;
 	}
 	
