@@ -16,7 +16,11 @@
 <!-- jqTree -->
 <script type="text/javascript" th:src="@{/jqtree/tree.jquery.js}"></script>
 <link rel="stylesheet" th:href="@{/jqtree/jqtree.css}"/>
-
+<style>
+input {
+	text-align:center;
+}
+</style>
 <!-- Toggle Switches  -->
 <!-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script> -->
@@ -57,9 +61,9 @@
 	<input onfocus="setInput('cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
 	<hr>
 	<label>Set New Class Name</label>
-	<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
+	<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="NewClassName"></input>
 	<label>Set New Parent Id</label>
-	<input onfocus="setInput('pid');" id="pid" type="text" class="form-control" name="pid" placeholder="ParentClass"></input>
+	<input onfocus="setInput('pid');" id="pid" type="text" class="form-control" name="pid" placeholder="321"></input>
 	<label>Abstract</label>
 	<input type="checkbox" class="form-control" name="abstract" value=true>
 </form>

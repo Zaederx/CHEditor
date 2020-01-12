@@ -28,12 +28,17 @@ button.btn-round {
 	padding: 0;
 	margin: 0;
 }
-/* ul.center-left{
-	display:;
-	margin:0 0;
-	padding:0;
+ul.center-left{
+	display:table;
+	margin : auto;
+
 }
- */
+ul.center-left li {
+	text-align:left;
+}
+input {
+	text-align:center;
+}
 </style>
 </head>
 <body>
@@ -73,7 +78,7 @@ button.btn-round {
 	<!-- Body -->
     <div id="instructionsBody" class="collapse show" aria-labelledby="instructionsHeading" data-parent="#accordion">
       <div class="card-body">
-      	<ul class="text-left" >
+      	<ul class="center-left" >
 	      	<li>Here you can search classes by name or by id.</li>
 			<li>Class information will be displayed below if valid name of id is submitted.</li>
 		</ul>

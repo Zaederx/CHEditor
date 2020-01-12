@@ -31,6 +31,18 @@ border-radius : 50%;
 padding: 0;
 margin: 0;
 }
+
+ul.center-left{
+	display:table;
+	margin : auto;
+
+}
+ul.center-left li {
+	text-align:left;
+}
+input {
+	text-align:center;
+}
 </style>
 </head>
 <body>
@@ -56,7 +68,7 @@ margin: 0;
 </div>
 
  <!-- Accordian Group -->
-<div id="accordion">
+<div id="accordion" class="container col-sm-8">
 <!-- Card -->
    <div class="card">
     <div class="card-header" id="instructionsHeading">
@@ -69,7 +81,7 @@ margin: 0;
 	<!-- Body -->
     <div id="instructionsBody" class="collapse" aria-labelledby="instructionsHeading" data-parent="#accordion">
       <div class="card-body">
-		<ul>
+		<ul class="text-left">
 	      	<li>Here you can add and delete classes.</li>
 			<li>Classes can be added by entering information and selecting add.</li>
 			<li>Classes can be deleted by clicking on a class from the hierarchy, then clicking delete.</li>
