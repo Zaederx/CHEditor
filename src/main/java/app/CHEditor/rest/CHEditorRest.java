@@ -595,7 +595,7 @@ public class CHEditorRest {
 	
 	
 	@GetMapping("search")
-	public Object search(@RequestParam(required = false) Integer cid, @RequestParam(required = false, name = "name") String className, @RequestParam(required = false, defaultValue = "false") Boolean displayId) {
+	public Object search(@RequestParam(required = false) Integer cid, @RequestParam(required = false, name = "name") String className, @RequestParam(required = false, defaultValue = "false", name = "d") Boolean displayId) {
 		Response res = new Response();
 		Clazz c = null;
 		if (cid != null) {

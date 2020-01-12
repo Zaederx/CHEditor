@@ -153,11 +153,10 @@ button.btn-round {
 <script>
 var inputFieldId = "#name";
 
-var inputURL = "";
-var address = "";
+var inputURL = "";//url used for field validation
+var address = ""; //url + inputFieldId
 var response = "";//class data retrieved from server
-var toDelete;
-var toDeleteList = [];
+var switchURL = "";
 var switchState = 0;
 var formId = "";
 var subBtn = ""; //submit Btn selection
@@ -176,7 +175,7 @@ function requestTreeData() {
 
 function showCid() {
 	console.log('*********showCid called*********');
-	requestTreeDataUrl();
+	requestTreeDataUrl(switchURL);
 }
 
 function requestTreeDataUrl(url) {
@@ -307,6 +306,7 @@ function searchClass() {
 			} else {
 				console.log("*****search class else statement called*****");
 				requestTreeDataUrl(url);
+				switchURL = url;
 			}
 			
 		}
