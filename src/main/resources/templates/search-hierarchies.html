@@ -45,8 +45,8 @@ button.btn-round {
 			</div>
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/}">Home</a></li>
-				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/hierarchies}">View Hierarchy</a></li>
-				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/edit}">Edit Hierarchy</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/hierarchies}">Add/Delete Class</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/edit}">Edit Class</a></li>
 				<li class="nav-item"><a class="nav-link active text-info">Search Hierarchy</a></li>
 			</ul>
 	</div>
@@ -86,7 +86,7 @@ button.btn-round {
   <div class="card">
     <div class="card-header" id="searchName">
       <h5 class="mb-0">
-        <button onclick="setBtn('sub-one');" class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchN" aria-expanded="false" aria-controls="collapseTwo">
+        <button onclick="setBtn('sub-one'); setIdSwitch('unchecked');" class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchN" aria-expanded="false" aria-controls="collapseTwo">
           Search Class By Name
         </button>
      </h5>
@@ -114,7 +114,7 @@ button.btn-round {
   <div class="card">
     <div class="card-header" id="searchById">
       <h5 class="mb-0">
-        <button onclick="setBtn('sub-two');" class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchId" aria-expanded="false" aria-controls="collapseThree">
+        <button onclick="setBtn('sub-two'); setIdSwitch('checked');" class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchId" aria-expanded="false" aria-controls="collapseThree">
           Search Class By Id
         </button>
      </h5>
@@ -139,7 +139,7 @@ button.btn-round {
 <!-- Toggle Switch For Display Id -->
 <br><hr>
 <div class="custom-control custom-switch">
-	<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();">
+	<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();" checked>
 	<label class="custom-control-label" for="cidSwitch">Display Class IDs</label>
 </div>
 
@@ -156,9 +156,8 @@ var inputFieldId = "#name";
 var inputURL = "";//url used for field validation
 var address = ""; //url + inputFieldId
 var response = "";//class data retrieved from server
-var switchURL = "";
-var switchState = 0;
-var formId = "";
+var switchURL = "";//used to ajax request for tree data
+var formId = "";//which form is curretly onfocus
 var subBtn = ""; //submit Btn selection
 
 
@@ -173,8 +172,37 @@ function requestTreeData() {
 	
 }
 
+function setIdSwitch(status) {
+	console.log('******set Switch status called******');
+	if (status == 'checked') {
+		if (!document.getElementById('cidSwitch').checked) {
+			$('#cidSwitch').click();
+			console.log('added checked');
+		}
+	}
+	else if (status == 'unchecked') {
+		if (document.getElementById('cidSwitch').checked) {
+			$('#cidSwitch').click();
+			console.log('removed checked');
+		}
+	}
+}
+
+//Display cid on jqTree Hierarchy
 function showCid() {
 	console.log('*********showCid called*********');
+	if (switchURL == "") {
+		if (document.getElementById('cidSwitch').checked) {
+			requestTreeData();
+		}
+		else {
+			$.ajax({
+				type:"GET",
+				url:"/cheditor/api/browse/",
+				success:getData
+				});
+		}
+	}
 	requestTreeDataUrl(switchURL);
 }
 
