@@ -94,16 +94,19 @@ input {
     </div>
   </div>
   
-</div>
-<br><hr>
-<div class="custom-control custom-switch">
-	<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();">
-	<label class="custom-control-label" for="cidSwitch">Display Class IDs</label>
-</div>
-
-<!-- <input type="checkbox" data-toggle="toggle" data-on="Show IDs" data-off="Hide IDs" data-height ="10" id="cidSwitch" onchange="showCid()"> -->
-
-<div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
+   <!-- Card 2 -->
+   <div class="card">
+    <div class="card-header" id="addClassHeading">
+      <h5 class="mb-0">
+        <button class="btn btn-link btn-round" data-toggle="collapse" data-target="#addClass" aria-expanded="false" aria-controls="collapseTwo">
+          Add Class
+        </button>
+     </h5>
+    </div>
+	<!-- Body -->
+    <div id="addClass" class="collapse" aria-labelledby="addClassHeading" data-parent="#accordion">
+      <div class="card-body">
+		
 <br><br><br>
 <p id="messageInfo" class="bg-info"></p>
 <form id="classForm" class="container col-sm-8" >
@@ -119,10 +122,43 @@ input {
 	
 </form>
 <button id="submit" class="btn btn-primary" onclick="addClass();"  value="Add Class">Add Class</button>
+		
+      </div>
+    </div>
+	</div> 
+  
+  <!-- Card 3 -->
+   <div class="card">
+    <div class="card-header" id="deleteClassHeading">
+      <h5 class="mb-0">
+        <button class="btn btn-link btn-round" data-toggle="collapse" data-target="#deleteClassBody" aria-expanded="false" aria-controls="collapseThree">
+          Delete Class
+        </button>
+     </h5>
+    </div>
+	<!-- Body -->
+    <div id="deleteClassBody" class="collapse" aria-labelledby="deleteClassHeading" data-parent="#accordion">
+      <div class="card-body">
+		<button id="delete-btn" class="btn btn-primary" onclick="deleteClass();">Delete Class</button>
+      </div>
+    </div>
+  </div>
+  
 
-
-<button id="delete-btn" class="btn btn-primary" onclick="deleteClass();">Delete Class</button>
+  
 </div>
+<br><hr>
+<div class="custom-control custom-switch">
+	<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();">
+	<label class="custom-control-label" for="cidSwitch">Display Class IDs</label>
+</div>
+
+<!-- <input type="checkbox" data-toggle="toggle" data-on="Show IDs" data-off="Hide IDs" data-height ="10" id="cidSwitch" onchange="showCid()"> -->
+<div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
+
+
+
+
 
 </body>
 <script>
