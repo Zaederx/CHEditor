@@ -53,6 +53,7 @@ input {
 				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/hierarchies}">Add/Delete Class</a></li>
 				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/edit}">Edit Class</a></li>
 				<li class="nav-item"><a class="nav-link active text-info">Search Hierarchy</a></li>
+				<li class="nav-itme"><a class="nav-link" th:href="@{/cheditor/login}">Login</a></li>
 			</ul>
 	</div>
 </div>
@@ -93,7 +94,7 @@ input {
   <div class="card">
     <div class="card-header" id="searchName">
       <h5 class="mb-0">
-        <button onclick="setBtn('sub-one'); setIdSwitch('unchecked');" class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchN" aria-expanded="false" aria-controls="collapseTwo">
+        <button onclick="setBtn('sub-one'); setIdSwitch('unchecked'); setMessageInfoId('messageInfo');" class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchN" aria-expanded="false" aria-controls="collapseTwo">
           Search Class By Name
         </button>
      </h5>
@@ -101,7 +102,7 @@ input {
 	<!-- Body -->
     <div  id="searchN" class="collapse" aria-labelledby="searchName" data-parent="#accordion" >
       <div class="card-body">
-      
+      <p id="messageInfo" class="bg-info"></p>
      <form id="form-name" class="form-group container col-sm-8" >
 		<label>Class Name</label>
 		<input onfocus="setInput('name'); setFormId('form-name');" id="name" type="text" class="form-control" name="name" placeholder="ClassName"></input>
@@ -121,7 +122,7 @@ input {
   <div class="card">
     <div class="card-header" id="searchById">
       <h5 class="mb-0">
-        <button onclick="setBtn('sub-two'); setIdSwitch('checked');" class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchId" aria-expanded="false" aria-controls="collapseThree">
+        <button onclick="setBtn('sub-two'); setIdSwitch('checked'); setMessageInfoId('messageInfo-two');" class="btn btn-link btn-round" data-toggle="collapse" data-target="#searchId" aria-expanded="false" aria-controls="collapseThree">
           Search Class By Id
         </button>
      </h5>
@@ -129,7 +130,7 @@ input {
 	<!-- Body -->
     <div id="searchId" class="collapse" aria-labelledby="searchById" data-parent="#accordion">
       <div class="card-body">
-      
+      <p id="messageInfo-two" class="bg-info"></p>
     <form id="form-cid" class="form-group container col-sm-8" >
 		<label>Class Id</label>
 		<input onfocus="setInput('cid'); setFormId('form-cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123" value=""></input>
@@ -142,7 +143,7 @@ input {
   </div>
   
 </div>
-<p id="messageInfo" class="bg-info"></p>
+<!-- <p id="messageInfo-two" class="bg-info"></p> -->
 <!-- Toggle Switch For Display Id -->
 <br><hr>
 <div class="custom-control custom-switch">
@@ -179,7 +180,7 @@ input {
 </body>
 <script>
 var inputFieldId = "#name";
-
+var messageInfoId = "";
 var inputURL = "";//url used for field validation
 var address = ""; //url + inputFieldId
 var response = "";//class data retrieved from server
@@ -187,8 +188,13 @@ var switchURL = "";//used to ajax request for tree data
 var formId = "";//which form is curretly onfocus
 var subBtn = ""; //submit Btn selection
 
+function setMessageInfoId(id) {
+	console.log("********** setMessageInfoId called **********");
+	console.log(id);
+	messageInfoId = '#'+id;
+}
 function getClassDetails() {
-	console.log("**********getClassDetails**********");
+	console.log("********** getClassDetails**********");
 	var name = "";
 	if (formId == 'form-name') {
 		name = 'name/';
@@ -206,13 +212,13 @@ function getClassDetails() {
 			var res = JSON.parse(str);
 			var ret = res.ret;
 			if (ret == 'false') {
-				$('#messageInfo').text(res.message);
-				$('#messageInfo').show();
+				$(messageInfoId).text(res.message);
+				$(messageInfofoId).show();
 			}
 			else {
 				displayClassDetails(data);
-			 	$('#messageInfo').text("");
-				$('#messageInfo').hide();
+			 	$(messageInfoId).text("");
+				$(messageInfoId).hide();
 			}
 		}
 	});
@@ -393,8 +399,8 @@ function searchClass() {
 			var str = JSON.stringify(data);
 			var res = JSON.parse(str);
 			if (res.ret == 'false') {
-				$('#messageInfo').show();
-				$('#messageInfo').text(res.message);
+				$(messageInfoId).show();
+				$(messageInfoId).text(res.message);
 			} else {
 				console.log("*****search class else statement called*****");
 				requestTreeDataUrl(url);
@@ -417,6 +423,7 @@ function validateForm () {
 	requestTreeData();
 	$('#classDetails').hide();
  	$('#messageInfo').hide();
+ 	$('#messageInfo-two').hide();
 	$(':input').keyup(function() {
 		console.log("******validateForm called*******");
 		setURL();
@@ -432,14 +439,14 @@ function validateForm () {
 					$('#'+subBtn).attr("disabled", 'true');
 					$('#'+subBtn).removeClass("btn-primary");
 					$('#'+subBtn).addClass("btn-secondary");
-					$('#messageInfo').text(res.message);
-					$('#messageInfo').show();
+					$(messageInfoId).text(res.message);
+					$(messageInfoId).show();
 				} else {
 					$('#'+subBtn).removeAttr("disabled");
 					$('#'+subBtn).removeClass("btn-secondary");
 					$('#'+subBtn).addClass("btn-primary");
-				 	$('#messageInfo').text("");
-					$('#messageInfo').hide();
+				 	$(messageInfoId).text("");
+					$(messageInfoId).hide();
 				}
 			}
 		});

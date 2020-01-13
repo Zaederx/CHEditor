@@ -29,5 +29,8 @@ public class CHEditorController {
 		return "search-hierarchies";
 	}
 	
-	
+	@GetMapping("login")
+	public String login() {
+		return "login";
+	}
 }

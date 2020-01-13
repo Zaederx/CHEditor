@@ -41,20 +41,14 @@ input {
 				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/hierarchies}">Add/Delete Class</a></li>
 				<li class="nav-item"><a class="nav-link active text-info">Edit Class</a></li>
 				<li class="nav-item"><a class="nav-link" th:href="@{/cheditor/search}">Search Hierarchy</a></li>
+				<li class="nav-itme"><a class="nav-link" th:href="@{/cheditor/login}">Login</a></li>
 			</ul>
 	</div>
 </div>
 
 <div class="container text-center justify-content-center">
 
-<div class="custom-control custom-switch">
-	<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();" checked>
-	<label class="custom-control-label" for="cidSwitch">Display Class IDs</label>
-</div>
 
-<!-- <input type="checkbox" data-toggle="toggle" data-on="Show IDs" data-off="Hide IDs" data-height ="10" id="cidSwitch" onchange="showCid()"> -->
-
-<div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
 
 <div id="accordion" class="container col-sm-8">
 
@@ -94,6 +88,7 @@ input {
 	<!-- Body -->
     <div id="editBody" class="collapse" aria-labelledby="editHeading" data-parent="#accordion">
       <div class="card-body">
+      	<p id="messageInfo" class="bg-info"></p>
 		<form id="classForm" class="container col-sm-8" >
 			<label>Class Id</label>
 			<input onfocus="setInput('cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
@@ -111,9 +106,18 @@ input {
     </div>
   </div>
   </div>
-<br><br><br>
+<br>
 <p id="messageInfo" class="bg-info"></p>
+<hr>
+<div class="custom-control custom-switch">
+	<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();" checked>
+	<label class="custom-control-label" for="cidSwitch">Display Class IDs</label>
+</div>
 
+<!-- <input type="checkbox" data-toggle="toggle" data-on="Show IDs" data-off="Hide IDs" data-height ="10" id="cidSwitch" onchange="showCid()"> -->
+
+<div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
+<br><br><br>
 </div>
 
 </body>
