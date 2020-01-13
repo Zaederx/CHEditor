@@ -249,15 +249,15 @@ function requestTreeData() {
 	
 }
 
-function setIdSwitch(status) {
+function setIdSwitch(state) {
 	console.log('******set Switch status called******');
-	if (status == 'checked') {
+	if (state == 'checked') {
 		if (!document.getElementById('cidSwitch').checked) {
 			$('#cidSwitch').click();
 			console.log('added checked');
 		}
 	}
-	else if (status == 'unchecked') {
+	else {
 		if (document.getElementById('cidSwitch').checked) {
 			$('#cidSwitch').click();
 			console.log('removed checked');
@@ -279,8 +279,9 @@ function showCid() {
 				success:getData
 				});
 		}
-	}
+	} else {
 	requestTreeDataUrl(switchURL);
+	}
 }
 
 function requestTreeDataUrl(url) {
@@ -300,11 +301,8 @@ function requestTreeDataUrl(url) {
 	}
 	
 }
-/* function showCid() {
-	console.log('*********showCid called*********');
-	requestTreeData();
-	
-} */
+
+
 function setBtn (btnId) {
 	console.log("********* setBtn called **********");
 	subBtn = btnId;
@@ -420,10 +418,13 @@ function searchClass() {
 $(document).ready(validateForm());
 
 function validateForm () {
+	/* Called once at start */
 	requestTreeData();
 	$('#classDetails').hide();
  	$('#messageInfo').hide();
  	$('#messageInfo-two').hide();
+ 	
+ 	/* Called repeatedly on input */
 	$(':input').keyup(function() {
 		console.log("******validateForm called*******");
 		setURL();
