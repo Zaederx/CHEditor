@@ -13,6 +13,8 @@
 <!-- JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- jqTree -->
 <script type="text/javascript" th:src="@{/jqtree/tree.jquery.js}"></script>
 <link rel="stylesheet" th:href="@{/jqtree/jqtree.css}"/>
@@ -53,22 +55,64 @@ input {
 <!-- <input type="checkbox" data-toggle="toggle" data-on="Show IDs" data-off="Hide IDs" data-height ="10" id="cidSwitch" onchange="showCid()"> -->
 
 <div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
+
+<div id="accordion" class="container col-sm-8">
+
+<!-- Card 1 -->
+ <div class="card">
+    <div class="card-header" id="instructionsHeading">
+      <h5 class="mb-0">
+        <button class="btn btn-link btn-round" data-toggle="collapse" data-target="#instructionsBody" aria-expanded="true" aria-controls="collapseOne">
+          <i class="fa fa-info-circle fa-2x"></i>
+        </button>
+     </h5>
+    </div>
+	<!-- Body -->
+    <div id="instructionsBody" class="collapse" aria-labelledby="instructionsHeading" data-parent="#accordion">
+      <div class="card-body">
+		<ul class="text-left">
+	      	<li>Here you can add and delete classes.</li>
+			<li>Classes can be added by entering information and selecting add.</li>
+			<li>Classes can be deleted by clicking on a class from the hierarchy, then clicking delete.</li>
+			<li>Click on the ► symbol next to parent classes to expand tree hierarchy / view child classes.</li>
+			<li>Click on the ▼ symbol next to parent classes to collapse tree hierarchy / hide child classes.</li>
+			<li>Id's should not exceed 999,999,999.</li>
+			<li>Note: Only classes that do not have children classes, can be selected for deletion.</li>
+		</ul>
+      </div>
+    </div>
+  </div>
+<!-- Card 2 -->
+   <div class="card">
+    <div class="card-header" id="editHeading">
+      <h5 class="mb-0">
+        <button class="btn btn-link btn-round" data-toggle="collapse" data-target="#editBody" aria-expanded="true" aria-controls="collapseTwo">
+          Edit
+        </button>
+     </h5>
+    </div>
+	<!-- Body -->
+    <div id="editBody" class="collapse" aria-labelledby="editHeading" data-parent="#accordion">
+      <div class="card-body">
+		<form id="classForm" class="container col-sm-8" >
+			<label>Class Id</label>
+			<input onfocus="setInput('cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
+			<hr>
+			<label>Set New Class Name</label>
+			<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="NewClassName"></input>
+			<label>Set New Parent Id</label>
+			<input onfocus="setInput('pid');" id="pid" type="text" class="form-control" name="pid" placeholder="321"></input>
+			<label>Abstract</label>
+			<input type="checkbox" class="form-control" name="abstract" value=true>
+		</form>
+
+		<button id="submit" class="btn btn-primary" onclick="editClass();"  value="Edit Class">Edit Class</button>
+      </div>
+    </div>
+  </div>
+  </div>
 <br><br><br>
 <p id="messageInfo" class="bg-info"></p>
-<form id="classForm" class="container col-sm-8" >
-	
-	<label>Class Id</label>
-	<input onfocus="setInput('cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
-	<hr>
-	<label>Set New Class Name</label>
-	<input onfocus="setInput('name');" id="name" type="text" class="form-control" name="name" placeholder="NewClassName"></input>
-	<label>Set New Parent Id</label>
-	<input onfocus="setInput('pid');" id="pid" type="text" class="form-control" name="pid" placeholder="321"></input>
-	<label>Abstract</label>
-	<input type="checkbox" class="form-control" name="abstract" value=true>
-</form>
-
-<button id="submit" class="btn btn-primary" onclick="editClass();"  value="Edit Class">Edit Class</button>
 
 </div>
 
