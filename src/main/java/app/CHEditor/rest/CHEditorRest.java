@@ -228,6 +228,22 @@ public class CHEditorRest {
 		}
 	}
 	
+	@GetMapping("getclass/name/{name}")
+	public Object readClass(@PathVariable String name) {
+		Response res = new Response();
+		Clazz c = null;
+		
+		c = cRepo.findByName(name);
+		
+		if (c == null) {
+			res.setRet(false);
+			res.setMessage("cid '"+name+"' not exist");
+			return res;
+		} else {
+			return c;
+		}
+	}
+	
 	/*TODO ADD REQUEST MAPPING - POST MAPPING*/
 	public Response updateClass() {
 		Response res = new Response();

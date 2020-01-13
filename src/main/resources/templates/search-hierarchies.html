@@ -28,7 +28,7 @@ button.btn-round {
 	padding: 0;
 	margin: 0;
 }
-ul.center-left{
+*.center-left{
 	display:table;
 	margin : auto;
 
@@ -106,7 +106,7 @@ input {
 	
 	</form>
 	<br>
-	<button id="sub-two" class="btn btn-primary" onclick="searchClass();"  value="Search Class">Search Class</button>
+	<button id="sub-one" class="btn btn-primary" onclick="getClassDetails();searchClass();"  value="Search Class">Search Class</button>
       	
       	
       </div>
@@ -130,10 +130,10 @@ input {
       
     <form id="form-cid" class="form-group container col-sm-8" >
 		<label>Class Id</label>
-		<input onfocus="setInput('cid'); setFormId('form-cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123"></input>
+		<input onfocus="setInput('cid'); setFormId('form-cid');" id="cid" type="text" class="form-control" name="cid" placeholder="123" value=""></input>
 	</form>
 	<br>
-<button id="sub-two" class="btn btn-primary" onclick="searchClass();"  value="Search Class">Search Class</button>
+<button id="sub-two" class="btn btn-primary" onclick="getClassDetails(); searchClass();"  value="Search Class">Search Class</button>
       
       </div>
     </div>
@@ -149,6 +149,26 @@ input {
 </div>
 
 <div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
+<br>
+<table id="classDetails" class="center-left table">
+	<thead class="thead-dark">
+		<tr>
+			<th colspan="2">Class Details</th>
+		</tr>
+	</thead>
+	<tr>
+		<th>Name</th><td id="className"></td>
+	</tr>
+	<tr>
+		<th>Id</th><td id="classId"></td>
+	</tr>
+	<tr>
+		<th>Abstract</th><td id="abstract"></td>
+	</tr>
+	<tr>
+		<th>Parent Id</th><td id="parentClassId"></td>
+	</tr>
+</table>
 
 <br><br><br>
 
@@ -165,7 +185,51 @@ var switchURL = "";//used to ajax request for tree data
 var formId = "";//which form is curretly onfocus
 var subBtn = ""; //submit Btn selection
 
+function getClassDetails() {
+	console.log("**********getClassDetails**********");
+	var name = "";
+	if (formId == 'form-name') {
+		name = 'name/';
+	} 
+	else {
+		name = "";
+	}
+	var formArray = $('#'+formId).serializeArray();
+	var formInput = formArray[0].value;
+	$.ajax({
+		type:"GET",
+		url: "/cheditor/api/getclass/"+name+formInput,
+		success: function (data) {
+			var str = JSON.stringify(data);
+			var res = JSON.parse(str);
+			var ret = res.ret;
+			if (ret == 'false') {
+				$('#messageInfo').text(res.message);
+				$('#messageInfo').show();
+			}
+			else {
+				displayClassDetails(data);
+			 	$('#messageInfo').text("");
+				$('#messageInfo').hide();
+			}
+		}
+	});
+	
+}
 
+function displayClassDetails(data) {
+	console.log("*******displayClassDetails called*****");
+	
+	var str = JSON.stringify(data);
+	var d = str.replace('abstract','_abstract');
+	var classJson = JSON.parse(d);
+	$('#className').text(classJson.name);
+	$('#classId').text(classJson.cid);
+	$('#abstract').text(classJson._abstract);
+	$('#parentClassId').text(classJson.pid);
+	$('#classDetails').show();
+	
+}
 function requestTreeData() {
 	console.log("*******REQUESTING TREE DATA*****");
 	
@@ -267,9 +331,9 @@ function getData(data) {
 
 /* Replaces cid and superclass with text id and children
 in order to match reqiured jqTree data structure */
-function parseFieldsToJQTree(data) {
+function parseFieldsToJQTree(str) {
 	console.log("********parseFieldsToJQTree called********");
-	var d = data.replace(/cid/g,'id');
+	var d = str.replace(/cid/g,'id');
 	d = d.replace(/superclassOf/g,'children');
 	console.log("jqTreeJSON:"+d);
 	d = JSON.parse(d);
@@ -295,13 +359,6 @@ function getTree(){
 		
 	});
 }
-
-
-
-
-
-
-
 
 
 
@@ -356,6 +413,7 @@ $(document).ready(validateForm());
 
 function validateForm () {
 	requestTreeData();
+	$('#classDetails').hide();
  	$('#messageInfo').hide();
 	$(':input').keyup(function() {
 		console.log("******validateForm called*******");
@@ -369,15 +427,15 @@ function validateForm () {
 				var res = JSON.parse(str);
 				var ret = res.ret;
 				if (ret == 'false') {
-					$(subBtn).attr("disabled", 'true');
-					$(subBtn).removeClass("btn-primary");
-					$(subBtn).addClass("btn-secondary");
+					$('#'+subBtn).attr("disabled", 'true');
+					$('#'+subBtn).removeClass("btn-primary");
+					$('#'+subBtn).addClass("btn-secondary");
 					$('#messageInfo').text(res.message);
 					$('#messageInfo').show();
 				} else {
-					$(subBtn).removeAttr("disabled");
-					$(subBtn).removeClass("btn-secondary");
-					$(subBtn).addClass("btn-primary");
+					$('#'+subBtn).removeAttr("disabled");
+					$('#'+subBtn).removeClass("btn-secondary");
+					$('#'+subBtn).addClass("btn-primary");
 				 	$('#messageInfo').text("");
 					$('#messageInfo').hide();
 				}
