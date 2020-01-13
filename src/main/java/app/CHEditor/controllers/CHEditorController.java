@@ -11,7 +11,7 @@ public class CHEditorController {
 
 	@GetMapping("hierarchies")
 	public String viewHierarchyPage() {
-		return "view-hierarchy";
+		return "add-delete-class";
 	}
 	
 	@GetMapping({"home","/"})
