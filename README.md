@@ -1,6 +1,5 @@
-# CHEditor
- Web Technology - CW3 - CHEditor
- # iVoteHub - Web Technology Course Work 2
+# CHEditor - Web Technology CW3
+
 ## [See Youtub Video Walkthrough](https://youtu.be/2B39i_A7SKU)
 
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/38586415/130472286-bc390e79-5221-4991-8b40-62f320b188d5.png">
