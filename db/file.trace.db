@@ -1,0 +1,625 @@
+2021-07-31 12:53:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CHEUSER (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        EMAIL VARCHAR(255),
+        NAME VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        ROLE VARCHAR(255),
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table cheuser (
+       id integer not null auto_increment,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        role varchar(255),
+        username varchar(255),
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:53:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CLAZZ (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        _ABSTRACT BIT,
+        CID INTEGER NOT NULL,
+        NAME VARCHAR(255) NOT NULL,
+        PID INTEGER,
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table clazz (
+       id integer not null auto_increment,
+        _abstract bit,
+        cid integer not null,
+        name varchar(255) not null,
+        pid integer,
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:53:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       drop index UK_18ctlsaqo17qjd3drqfpbsge3 [42102-200]
+2021-07-31 12:53:53 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       add constraint UK_18ctlsaqo17qjd3drqfpbsge3 unique (cid) [42102-200]
+2021-07-31 12:54:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CHEUSER (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        EMAIL VARCHAR(255),
+        NAME VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        ROLE VARCHAR(255),
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table cheuser (
+       id integer not null auto_increment,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        role varchar(255),
+        username varchar(255),
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:54:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CLAZZ (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        _ABSTRACT BIT,
+        CID INTEGER NOT NULL,
+        NAME VARCHAR(255) NOT NULL,
+        PID INTEGER,
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table clazz (
+       id integer not null auto_increment,
+        _abstract bit,
+        cid integer not null,
+        name varchar(255) not null,
+        pid integer,
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:54:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       drop index UK_18ctlsaqo17qjd3drqfpbsge3 [42102-200]
+2021-07-31 12:54:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       add constraint UK_18ctlsaqo17qjd3drqfpbsge3 unique (cid) [42102-200]
+2021-07-31 12:54:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CHEUSER (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        EMAIL VARCHAR(255),
+        NAME VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        ROLE VARCHAR(255),
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table cheuser (
+       id integer not null auto_increment,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        role varchar(255),
+        username varchar(255),
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:54:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CLAZZ (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        _ABSTRACT BIT,
+        CID INTEGER NOT NULL,
+        NAME VARCHAR(255) NOT NULL,
+        PID INTEGER,
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table clazz (
+       id integer not null auto_increment,
+        _abstract bit,
+        cid integer not null,
+        name varchar(255) not null,
+        pid integer,
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:54:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       drop index UK_18ctlsaqo17qjd3drqfpbsge3 [42102-200]
+2021-07-31 12:54:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       add constraint UK_18ctlsaqo17qjd3drqfpbsge3 unique (cid) [42102-200]
+2021-07-31 12:54:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CHEUSER (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        EMAIL VARCHAR(255),
+        NAME VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        ROLE VARCHAR(255),
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table cheuser (
+       id integer not null auto_increment,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        role varchar(255),
+        username varchar(255),
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:54:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CLAZZ (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        _ABSTRACT BIT,
+        CID INTEGER NOT NULL,
+        NAME VARCHAR(255) NOT NULL,
+        PID INTEGER,
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table clazz (
+       id integer not null auto_increment,
+        _abstract bit,
+        cid integer not null,
+        name varchar(255) not null,
+        pid integer,
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:54:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       drop index UK_18ctlsaqo17qjd3drqfpbsge3 [42102-200]
+2021-07-31 12:54:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       add constraint UK_18ctlsaqo17qjd3drqfpbsge3 unique (cid) [42102-200]
+2021-07-31 12:54:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CHEUSER (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        EMAIL VARCHAR(255),
+        NAME VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        ROLE VARCHAR(255),
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table cheuser (
+       id integer not null auto_increment,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        role varchar(255),
+        username varchar(255),
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:54:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CLAZZ (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        _ABSTRACT BIT,
+        CID INTEGER NOT NULL,
+        NAME VARCHAR(255) NOT NULL,
+        PID INTEGER,
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table clazz (
+       id integer not null auto_increment,
+        _abstract bit,
+        cid integer not null,
+        name varchar(255) not null,
+        pid integer,
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:54:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       drop index UK_18ctlsaqo17qjd3drqfpbsge3 [42102-200]
+2021-07-31 12:54:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       add constraint UK_18ctlsaqo17qjd3drqfpbsge3 unique (cid) [42102-200]
+2021-07-31 12:55:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CHEUSER (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        EMAIL VARCHAR(255),
+        NAME VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        ROLE VARCHAR(255),
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table cheuser (
+       id integer not null auto_increment,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        role varchar(255),
+        username varchar(255),
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:55:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CLAZZ (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        _ABSTRACT BIT,
+        CID INTEGER NOT NULL,
+        NAME VARCHAR(255) NOT NULL,
+        PID INTEGER,
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table clazz (
+       id integer not null auto_increment,
+        _abstract bit,
+        cid integer not null,
+        name varchar(255) not null,
+        pid integer,
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:55:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       drop index UK_18ctlsaqo17qjd3drqfpbsge3 [42102-200]
+2021-07-31 12:55:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       add constraint UK_18ctlsaqo17qjd3drqfpbsge3 unique (cid) [42102-200]
+2021-07-31 12:55:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CHEUSER (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        EMAIL VARCHAR(255),
+        NAME VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        ROLE VARCHAR(255),
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table cheuser (
+       id integer not null auto_increment,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        role varchar(255),
+        username varchar(255),
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:55:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CLAZZ (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        _ABSTRACT BIT,
+        CID INTEGER NOT NULL,
+        NAME VARCHAR(255) NOT NULL,
+        PID INTEGER,
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table clazz (
+       id integer not null auto_increment,
+        _abstract bit,
+        cid integer not null,
+        name varchar(255) not null,
+        pid integer,
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:55:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       drop index UK_18ctlsaqo17qjd3drqfpbsge3 [42102-200]
+2021-07-31 12:55:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       add constraint UK_18ctlsaqo17qjd3drqfpbsge3 unique (cid) [42102-200]
+2021-07-31 12:55:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CHEUSER (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        EMAIL VARCHAR(255),
+        NAME VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        ROLE VARCHAR(255),
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table cheuser (
+       id integer not null auto_increment,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        role varchar(255),
+        username varchar(255),
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:55:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CLAZZ (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        _ABSTRACT BIT,
+        CID INTEGER NOT NULL,
+        NAME VARCHAR(255) NOT NULL,
+        PID INTEGER,
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table clazz (
+       id integer not null auto_increment,
+        _abstract bit,
+        cid integer not null,
+        name varchar(255) not null,
+        pid integer,
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:55:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       drop index UK_18ctlsaqo17qjd3drqfpbsge3 [42102-200]
+2021-07-31 12:55:09 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       add constraint UK_18ctlsaqo17qjd3drqfpbsge3 unique (cid) [42102-200]
+2021-07-31 12:55:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CHEUSER (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        EMAIL VARCHAR(255),
+        NAME VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        ROLE VARCHAR(255),
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table cheuser (
+       id integer not null auto_increment,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        role varchar(255),
+        username varchar(255),
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:55:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CLAZZ (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        _ABSTRACT BIT,
+        CID INTEGER NOT NULL,
+        NAME VARCHAR(255) NOT NULL,
+        PID INTEGER,
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table clazz (
+       id integer not null auto_increment,
+        _abstract bit,
+        cid integer not null,
+        name varchar(255) not null,
+        pid integer,
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 12:55:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       drop index UK_18ctlsaqo17qjd3drqfpbsge3 [42102-200]
+2021-07-31 12:55:13 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       add constraint UK_18ctlsaqo17qjd3drqfpbsge3 unique (cid) [42102-200]
+2021-07-31 13:22:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CHEUSER (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        EMAIL VARCHAR(255),
+        NAME VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        ROLE VARCHAR(255),
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table cheuser (
+       id integer not null auto_increment,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        role varchar(255),
+        username varchar(255),
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 13:22:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CLAZZ (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        _ABSTRACT BIT,
+        CID INTEGER NOT NULL,
+        NAME VARCHAR(255) NOT NULL,
+        PID INTEGER,
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table clazz (
+       id integer not null auto_increment,
+        _abstract bit,
+        cid integer not null,
+        name varchar(255) not null,
+        pid integer,
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-07-31 13:22:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       drop index UK_18ctlsaqo17qjd3drqfpbsge3 [42102-200]
+2021-07-31 13:22:18 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       add constraint UK_18ctlsaqo17qjd3drqfpbsge3 unique (cid) [42102-200]
+2021-08-23 15:41:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CHEUSER (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        EMAIL VARCHAR(255),
+        NAME VARCHAR(255),
+        PASSWORD VARCHAR(255),
+        ROLE VARCHAR(255),
+        USERNAME VARCHAR(255),
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table cheuser (
+       id integer not null auto_increment,
+        email varchar(255),
+        name varchar(255),
+        password varchar(255),
+        role varchar(255),
+        username varchar(255),
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-08-23 15:41:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "
+    CREATE TABLE CLAZZ (
+       ID INTEGER NOT NULL AUTO_INCREMENT,
+        _ABSTRACT BIT,
+        CID INTEGER NOT NULL,
+        NAME VARCHAR(255) NOT NULL,
+        PID INTEGER,
+        PRIMARY KEY (ID)
+    ) ENGINE=[*]INNODB"; expected "identifier"; SQL statement:
+
+    create table clazz (
+       id integer not null auto_increment,
+        _abstract bit,
+        cid integer not null,
+        name varchar(255) not null,
+        pid integer,
+        primary key (id)
+    ) engine=InnoDB [42001-200]
+2021-08-23 15:41:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       drop index UK_18ctlsaqo17qjd3drqfpbsge3 [42102-200]
+2021-08-23 15:41:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+
+    alter table clazz 
+       add constraint UK_18ctlsaqo17qjd3drqfpbsge3 unique (cid) [42102-200]
+2021-08-23 15:42:24 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.pid is null [42102-200]
+2021-08-23 15:42:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.pid is null [42102-200]
+2021-08-23 15:42:37 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.pid is null [42102-200]
+2021-08-23 15:42:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:42:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:42:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:42:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:42:49 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:42:51 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.cid=? [42102-200]
+2021-08-23 15:42:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:43:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.pid is null [42102-200]
+2021-08-23 15:43:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.pid is null [42102-200]
+2021-08-23 15:43:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.pid is null [42102-200]
+2021-08-23 15:43:23 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.pid is null [42102-200]
+2021-08-23 15:43:26 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.pid is null [42102-200]
+2021-08-23 15:43:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.pid is null [42102-200]
+2021-08-23 15:43:29 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.pid is null [42102-200]
+2021-08-23 15:44:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:44:44 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:45:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:45:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:45:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:45:12 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.cid=? [42102-200]
+2021-08-23 15:45:28 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.name=? [42102-200]
+2021-08-23 15:45:31 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLAZZ" not found; SQL statement:
+select clazz0_.id as id1_1_, clazz0_._abstract as _abstrac2_1_, clazz0_.cid as cid3_1_, clazz0_.name as name4_1_, clazz0_.pid as pid5_1_ from clazz clazz0_ where clazz0_.pid is null [42102-200]
