@@ -57,7 +57,7 @@ Once the boot process is complete, you can then view the website from https://lo
 Note: Occassionaly these project may not work with you local version of gradle, so it's important to use the wrapper.
 
 
-## Project Shortcommings - (8TH July 2021 Update - Now uses AJAX)
+## Project Shortcommings
 I created this before I learnt learn about separating the JS from HTML into their own files, so all js is written in script tags at the end of the HTML files. Were I to make this project now, I'd have them in separate files.
 
 ## Additional Notes
