@@ -54,7 +54,7 @@ On Windows
 ```
 
 Once the boot process is complete, you can then view the website from https://localhost:8090/home (if you are using default configurations). 
-Note: Occassionaly these project may not work with you local version of gradle, so it's important to use the wrapper.
+Note: Occassionaly these project may not work with your local version of gradle, so it's important to use the wrapper.
 
 
 ## Project Shortcommings
