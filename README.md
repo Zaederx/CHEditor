@@ -58,7 +58,7 @@ Note: Occassionaly these project may not work with you local version of gradle, 
 
 
 ## Project Shortcommings
-I created this before I learnt learn about separating the JS from HTML into their own files, so all js is written in script tags at the end of the HTML files. Were I to make this project now, I'd have them in separate files.
+I created this before I learnt about separating the JS from HTML into their own files, so all js is written in script tags at the end of the HTML files. Were I to make this project now, I'd have them in separate files.
 
 ## Additional Notes
 The project website uses a self-signed certificate so may not work on Safari, in which case I recommend opening it in FireFox or Google Chrome which which after displaying a warning allows you the option to proceed to open the page.
