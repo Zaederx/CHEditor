@@ -27,6 +27,7 @@ This was for a university web technology assignment. We were asked to create a '
 - Hibernate
 - MySQL (orignially - now using H2Database for portability)
 - Thymeleaf
+- BootStrap
 
 ## Requirements to run the project
 You will need to have java 11 or higher installed and on your classpath in order to build and run this gradle project.
