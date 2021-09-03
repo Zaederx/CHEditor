@@ -35,7 +35,7 @@ Optionally you can use a local installation of gradle 6.5.1 to build and run thi
 
 
 ## Setup
-The project was originally designed to work with MySQL which reqiured MySQL server setup and configuration but has been changed to use H2Database insteac for greater portability. 
+The project was originally designed to work with MySQL which reqiured MySQL server setup and configuration but has been changed to use H2Database instead for greater portability. 
 
 Now you can simply pull the repository and the application using the gradle wrapper.
 
