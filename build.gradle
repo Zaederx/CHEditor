@@ -40,5 +40,14 @@ test {
 	useJUnitPlatform()
 }
 
+//needed to run build locally
 task stage(dependsOn: ['build', 'clean'])
 build.mustRunAfter clean
+
+//needed to skip tests
+gradle.taskGraph.whenReady {
+  taskGraph ->
+    if (taskGraph.hasTask(stage)) {
+      test.enabled = false
+    }
+}
