@@ -1,3 +1,5 @@
+!gradle-wrapper.jar
+
 #Eclipse Git ignore 
 .metadata
 bin/
