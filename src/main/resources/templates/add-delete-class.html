@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<!-- CSS -->
+<!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <!-- jQuery library -->
@@ -10,7 +10,7 @@
 <!-- Popper JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
-<!-- JavaScript -->
+<!-- Bootstrap JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
 <!-- jqTree -->
@@ -23,27 +23,12 @@
 <!-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script> -->
 
+<!-- Site Javascript and CSS -->
+<script type="text/javascript" th:src="@{/js/add-delete-class.js}" defer></script>
+<link rel="stylesheet" th:href="@{/css/main.css}">
+
 <meta charset="UTF-8">
 <title>View Hierarchy</title>
-<style>
-button.btn-round {
-border-radius : 50%;
-padding: 0;
-margin: 0;
-}
-
-ul.center-left{
-	display:table;
-	margin : auto;
-
-}
-ul.center-left li {
-	text-align:left;
-}
-input {
-	text-align:center;
-}
-</style>
 </head>
 <body>
 <div class="jumbotron text-center">
@@ -148,246 +133,15 @@ input {
 </div>
   
 
-<br><hr>
-<div class="custom-control custom-switch">
-	<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();">
-	<label class="custom-control-label" for="cidSwitch">Display Class IDs</label>
-</div>
+	<br><hr>
+	<div class="custom-control custom-switch">
+		<input type="checkbox" class="custom-control-input" id="cidSwitch" onclick="showCid();">
+		<label class="custom-control-label" for="cidSwitch">Display Class IDs</label>
+	</div>
 
-<!-- <input type="checkbox" data-toggle="toggle" data-on="Show IDs" data-off="Hide IDs" data-height ="10" id="cidSwitch" onchange="showCid()"> -->
-<div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
-<br><br><br>
-</div>
-
-
-
-
+	<!-- <input type="checkbox" data-toggle="toggle" data-on="Show IDs" data-off="Hide IDs" data-height ="10" id="cidSwitch" onchange="showCid()"> -->
+	<div id="tree" class="container d-flex col-sm-8 justify-content-center"></div>
+	<br><br><br>
+	</div>
 </body>
-<script>
-var inputFieldId = "#name";
-var switchURL = "/cheditor/api/browse";
-var inputURL = "";
-var address = "";
-var response = "";//class data retireved from server
-var toDelete;
-var toDeleteList = [];
-var switchState = 0;
-
-function editClasses () {
-	$.ajax({
-		type: "GET",
-		url: "/cheditor/api/addclassJSON",
-		data: $('#tree').tree('getTree'),
-		dataType: "json",
-		contentType: "application/json; charset=utf-8",
-		success: function (result) {
-			//if result returns true - put classes edited
-		}
-	});
-}
-
-function showCid() {
-	console.log('*********showCid called*********');
-	requestTreeData();
-	
-}
-
-function requestTreeData() {
-	console.log("*******REQUESTING TREE DATA*****");
-	if (document.getElementById('cidSwitch').checked) {
-	$.ajax({
-		type:"GET",
-		url:"/cheditor/api/browse/true",
-		success:getData
-		});
-	} else {
-		$.ajax({
-			type:"GET",
-			url:"/cheditor/api/browse",
-			success:getData
-			});
-	}
-	
-}
-
-function getTree(){
-	console.log("******getTree() called******");
-	$('#tree').tree('destroy');
-	$('#tree').tree({
-		data:response,
-		autoOpen: true,
-		dragAndDrop:true,
-		saveState:true,
-		selectable: true,
-	 	onCanSelectNode: function (node) {
-			if (node.children.length == 0){
-				return true;
-			}
-			return false;
-		}
-		
-	});
-}
-
-
-/* function getResponse(data) {
-	var str = JSON.stringify(data);
-	res = JSON.parse(str);
-	
-} */
-
-function getData(data) {
-	console.log("*******getData called****")
- 	var str = JSON.stringify(data);
-	console.log("JSON:"+str);
-	response = parseFieldsToJQTree(str);
-
-	console.log('Response'+response);
-	getTree();
-}
-
-function parseFieldsToJQTree(data) {
-	console.log("********parseFieldsToJQTree called********");
-	var d = data.replace(/cid/g,'id');
-	d = d.replace(/superclassOf/g,'children');
-	console.log("jqTreeJSON:"+d);
-	d = JSON.parse(d);
-	return d;
-}
-
-function deleteClass () {
-	console.log('**********delete Class called*********')
-	nodes = $('#tree').tree('getState');
-
-	toDeleteList = nodes.selected_node;
-	
-	console.log(toDeleteList);
-	sendClassesToDelete();
-}
-
-function sendClassesToDelete() {
-/* 	$(function(){ $('#cidSwitch').bootstrapToggle('off') }); */
-	console.log("*********sendClassesToDelete called**********");
-	$.ajax({
-		type:"POST",
-		url: "/cheditor/api/deleteclassesJSON",
-		data: JSON.stringify({"toDeleteList":toDeleteList}),
-		dataType: "json",
-	 	contentType: "application/json; charset=utf-8;",
-		success: function (result) {
-			var str = JSON.stringify(result);
-			var res = JSON.parse(str);
-			var ret = res.ret;
-			console.log("ret:"+ret);
-			if (ret == 'true') {
-				$('#messageInfo').text("Class deleted");
-				$('#messageInfo').show();
-			} else {
-				$('#messageInfo').text(res.message);
-				$('#messageInfo').show();
-			}
-			$('#tree').tree('destroy');
-			requestTreeData();
-		}
-	});
-}
-
-function setInput(id){
-	console.log("******setInput called******");
-	console.log("inputId = "+ id);
-	inputFieldId = "#"+id;
-	address = "/cheditor/api/isValid/"+id+"/";
-}
-
-function setURL(){
-	inputURL = address + $(inputFieldId).val();
-}
-
-/*Called by submit button
- * 
- * Posts Form */
-function addClass() {
-
-	console.log("******addClass called******");
-	var form = $('#classForm').serialize();
-	var url = "/cheditor/api/addclass?"+form;
-	$.ajax({
-		type:"GET",
-		url: url,
-		success: function(data) {
-			$('#tree').tree('destroy');
-			requestTreeData();
-			var str = JSON.stringify(data);
-			var res = JSON.parse(str);
-			if (res.ret == 'true') {
-				$('#messageInfo').show();
-				$('#messageInfo').text("Added Class");
-			}
-			
-		}
-	});
-	
-	document.getElementById('classForm').reset();
-}
-
-
-
-
-
-function sendToDelete(clazz) {
-	$.ajax({
-		type:"POST",
-		url: "/cheditor/api/delete/"+clazz,
-		success: function (result) {
-			$('#messageInfo').text("Class deleted");
-			$('#messageInfo').show();
-		}
-	});
-}
-
-
-
-$(document).ready(validateForm());
-
-function validateForm () {
-/* 	$(function(){ $('#cidSwitch').bootstrapToggle() }); */
-	requestTreeData();
- 	$('#messageInfo').hide();
-	$(':input').keyup(function() {
-		console.log("******validateForm called*******");
-		setURL();
-		$('#messageInfo').hide();
-		$.ajax({
-			type: "GET",
-			url: inputURL,
-			success: function (result) {
-				var str = JSON.stringify(result);
-				var res = JSON.parse(str);
-				var ret = res.ret;
-				if (ret == 'false') {
-					$('#submit').attr("disabled", 'true');
-					$('#submit').removeClass("btn-primary");
-					$('#submit').addClass("btn-secondary");
-					$('#messageInfo').text(res.message);
-					$('#messageInfo').show();
-				} else {
-					$('#submit').removeAttr("disabled");
-					$('#submit').removeClass("btn-secondary");
-					$('#submit').addClass("btn-primary");
-				 	$('#messageInfo').text("");
-					$('#messageInfo').hide();
-				}
-			}
-		});
-		
-	})
-
-
-	
-}
-
-
-
-
-</script>
 </html>
