@@ -1,0 +1,23 @@
+button.btn-round {
+	border-radius : 50%;
+	padding: 0;
+	margin: 0;
+}
+
+table.center-left {
+	display: table;
+	margin: auto;
+}
+
+ul.center-left {
+	display :table;
+	margin : auto;
+
+}
+ul.center-left li {
+	text-align:left;
+}
+
+input {
+	text-align:center;
+}
