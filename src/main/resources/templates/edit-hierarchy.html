@@ -98,7 +98,9 @@
 			<label>Set New Parent Id</label>
 			<input onfocus="setInput('pid');" id="pid" type="text" class="form-control" name="pid" placeholder="321"></input>
 			<label>Abstract</label>
-			<input type="checkbox" class="form-control" name="abstract" value=true>
+			<div class="abstract-checkbox">
+				<input type="checkbox" name="abstract" value="false" >
+			</div>
 		</form>
 
 		<button id="submit" class="btn btn-primary" onclick="editClass();"  value="Edit Class">Edit Class</button>
