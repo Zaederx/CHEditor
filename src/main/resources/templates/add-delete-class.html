@@ -19,9 +19,6 @@
 
 <!-- FontAwesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- Toggle Switches  -->
-<!-- <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script> -->
 
 <!-- Site Javascript and CSS -->
 <script type="text/javascript" th:src="@{/js/add-delete-class.js}" defer></script>
@@ -103,7 +100,10 @@
 	<label>Parent Id</label>
 	<input onfocus="setInput('pid');" id="pid" type="text" class="form-control" name="pid" placeholder="ParentClass"></input>
 	<label>Abstract</label>
-	<input type="checkbox" class="form-control" name="abstract" value=true >
+	<div class="abstract-checkbox">
+		<input type="checkbox" name="abstract" value="false" >
+	</div>
+	
 	
 	
 </form>

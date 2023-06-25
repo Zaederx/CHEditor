@@ -21,3 +21,8 @@ ul.center-left li {
 input {
 	text-align:center;
 }
+
+.abstract-checkbox {
+	margin: auto;
+	justify-content: center;
+}
